@@ -1,0 +1,11 @@
+package com.ai.creavision.domain.model
+
+
+import com.google.gson.annotations.SerializedName
+
+data class ImageResponse(
+    @SerializedName("created")
+    val created: Int?,
+    @SerializedName("data")
+    val data: List<Data?>?
+)

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Material3.BottomSheet"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:background="@color/window_background"
+    android:orientation="vertical">
+
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:id="@+id/drag_handle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="1 : 1"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip2"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9 : 16"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip3"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4 : 5"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip4"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16 : 9"
+            android:textColor="@color/colorPrimary"
+            app:checkedIconVisible="false"
+            app:chipBackgroundColor="@color/mtrl_choice_chip_background_color"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip5"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 : 4"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip6"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5 : 4"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip7"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4 : 3"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip8"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 : 3"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip9"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 : 2"
+            android:textColor="@color/colorPrimary"
+            app:chipEndPadding="12dp"
+            app:chipMinHeight="40dp"
+            app:chipStartPadding="12dp"
+            app:chipStrokeColor="@color/colorPrimary"
+            app:chipStrokeWidth="1dp" />
+    </com.google.android.material.chip.ChipGroup>
+
+
+
+
+</LinearLayout>

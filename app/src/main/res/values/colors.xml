@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#6949ff</color>
+    <color name="colorOnSurface">#181a20</color>
+    <color name="colorSurface">#181a20</color>
+
+
+
+
+    <color name="window_background">#15171C</color>
+
+    <color name="text_field_background">#1f222a</color>
+
+
+
+
+</resources>
