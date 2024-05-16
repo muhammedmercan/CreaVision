@@ -17,7 +17,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment @Inject constructor(
-    val homeAdapter: HomeAdapter
+    val homeAdapter: HomeAdapter,
+    val artStyleAdapter: ArtStyleAdapter
 
 ): Fragment() {
 
@@ -25,7 +26,7 @@ class HomeFragment @Inject constructor(
     private val binding get() = _binding!!
 
     private val aspectRatioModalBottomSheet = AspectRatioBottomSheetModel()
-    private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(homeAdapter)
+    private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(artStyleAdapter)
 
 
     override fun onCreateView(
@@ -44,9 +45,13 @@ class HomeFragment @Inject constructor(
         onClick()
 
         binding.recyclerViewHome.adapter = homeAdapter
+
         homeAdapter.artyStyleResponseList = Constants.ART_STYLES
 
+
     }
+
+
 
     private fun onClick() {
 
@@ -58,6 +63,10 @@ class HomeFragment @Inject constructor(
         binding.btnArtStyle.setOnClickListener() {
 
             artStyleModalBottomSheet.show(parentFragmentManager, ArtStyleBottomSheetModel.TAG)
+        }
+
+        artStyleAdapter.setOnItemClickListener {
+            binding.recyclerViewHome.adapter?.notifyDataSetChanged()
         }
 
         binding.btnGenerate.setOnClickListener() {

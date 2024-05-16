@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ai.creavision.R
-import com.ai.creavision.presentation.home.HomeAdapter
+import com.ai.creavision.presentation.home.ArtStyleAdapter
 import com.ai.creavision.utils.Constants
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -15,7 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
 class ArtStyleBottomSheetModel @Inject constructor(
-    private val homeAdapter: HomeAdapter
+    private val artStyleAdapter: ArtStyleAdapter
 
 ): BottomSheetDialogFragment() {
 
@@ -33,8 +33,8 @@ class ArtStyleBottomSheetModel @Inject constructor(
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recyclerViewArtStyleBottomSheet)
-        recyclerView?.adapter = homeAdapter
-        homeAdapter.artyStyleResponseList = Constants.ART_STYLES
+        recyclerView?.adapter = artStyleAdapter
+        artStyleAdapter.artyStyleResponseList = Constants.ART_STYLES
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

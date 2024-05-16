@@ -8,26 +8,23 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ai.creavision.R
-import com.ai.creavision.databinding.ItemArtStyleHomeBinding
+import com.ai.creavision.databinding.ItemArtStylePageBinding
 import com.ai.creavision.domain.model.ArtStyle
 import com.ai.creavision.domain.model.Style
 import javax.inject.Inject
 
-class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
+class ArtStyleAdapter @Inject constructor() : RecyclerView.Adapter<ArtStyleAdapter.ViewHolder>() {
 
-    private var onItemClickListener : ((Int) -> Unit)? = null
+    private var onItemClickListener : (() -> Unit)? = null
 
-    class ViewHolder(val binding: ItemArtStyleHomeBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemArtStylePageBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffUtil = object : DiffUtil.ItemCallback<ArtStyle>() {
         override fun areItemsTheSame(oldItem: ArtStyle, newItem: ArtStyle): Boolean {
             return oldItem == newItem
         }
-
         override fun areContentsTheSame(oldItem: ArtStyle, newItem: ArtStyle): Boolean {
-
             return  oldItem == newItem
-
         }
     }
 
@@ -37,15 +34,12 @@ class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewH
         get() = recyclerListDiffer.currentList
         set(value) = recyclerListDiffer.submitList(value)
 
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemArtStyleHomeBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemArtStylePageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
 
-    fun setOnItemClickListener(listener : (Int) -> Unit) {
+    fun setOnItemClickListener(listener : () -> Unit) {
         onItemClickListener = listener
     }
 
@@ -54,20 +48,16 @@ class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewH
         holder.binding.imgArtStyle.setImageResource(artyStyleResponseList[position].image)
         holder.binding.txtArtStyle.text = artyStyleResponseList[position].name
 
-
         if (Style.getValue() == artyStyleResponseList[position].name) {
             holder.binding.imgArtStyle.strokeWidth = 10F
             holder.binding.imgArtStyle.alpha = 0.5F
             holder.binding.txtArtStyle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorPrimary))
             holder.binding.imgCheckIcon.visibility = View.VISIBLE
-
-
         } else {
             holder.binding.imgArtStyle.strokeWidth = 0F
             holder.binding.imgArtStyle.alpha = 1F
             holder.binding.txtArtStyle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
             holder.binding.imgCheckIcon.visibility = View.INVISIBLE
-
         }
 
         holder.itemView.setOnClickListener() {
@@ -77,13 +67,10 @@ class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewH
             holder.binding.imgArtStyle.alpha = 0.5F
             holder.binding.txtArtStyle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorPrimary))
             holder.binding.imgCheckIcon.visibility = View.VISIBLE
-
-
             notifyDataSetChanged()
+            onItemClickListener?.invoke()
         }
-
     }
-
 
     override fun getItemCount(): Int {
         return artyStyleResponseList.size

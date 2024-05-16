@@ -12,7 +12,7 @@ class CreaVisionFragmentFactory @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
         return when(className){
-            HomeFragment::class.java.name -> HomeFragment(HomeAdapter())
+            HomeFragment::class.java.name -> HomeFragment(HomeAdapter(), ArtStyleAdapter())
 
             else -> super.instantiate(classLoader, className)
         }
