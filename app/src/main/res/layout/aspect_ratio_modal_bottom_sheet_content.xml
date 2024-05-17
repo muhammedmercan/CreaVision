@@ -38,6 +38,8 @@
             android:text="1 : 1"
             android:textColor="@color/colorPrimary"
             app:chipEndPadding="12dp"
+            app:chipIcon="@drawable/aspect_ratio_9_16"
+            app:chipIconEnabled="true"
             app:chipMinHeight="40dp"
             app:chipStartPadding="12dp"
             app:chipStrokeColor="@color/colorPrimary"

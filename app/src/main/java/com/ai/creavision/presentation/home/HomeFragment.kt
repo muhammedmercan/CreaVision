@@ -51,8 +51,6 @@ class HomeFragment @Inject constructor(
 
     }
 
-
-
     private fun onClick() {
 
         binding.cardViewAspectRatio.setOnClickListener() {
@@ -60,14 +58,26 @@ class HomeFragment @Inject constructor(
             aspectRatioModalBottomSheet.show(parentFragmentManager, AspectRatioBottomSheetModel.TAG)
         }
 
-        binding.btnArtStyle.setOnClickListener() {
+        binding.btnSeeAll.setOnClickListener() {
 
             artStyleModalBottomSheet.show(parentFragmentManager, ArtStyleBottomSheetModel.TAG)
+        }
+
+        binding.btnClearText.setOnClickListener() {
+
+            binding.editTextPrompt.text.clear()
+        }
+
+        binding.btnSupriseMe.setOnClickListener() {
+            val random = (0..100).random()
+            binding.editTextPrompt.setText(Constants.PROMPTS[random])
         }
 
         artStyleAdapter.setOnItemClickListener {
             binding.recyclerViewHome.adapter?.notifyDataSetChanged()
         }
+
+
 
         binding.btnGenerate.setOnClickListener() {
 

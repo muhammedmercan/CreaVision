@@ -25,10 +25,11 @@
             android:id="@+id/editTextPrompt"
             android:layout_width="0dp"
             android:layout_height="150dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_shape"
             android:ems="10"
             android:gravity="start|top"
+            android:hint="@string/what_do_you_want_to_create"
             android:inputType="textMultiLine"
             android:padding="10dp"
             android:textColor="@color/white"
@@ -56,8 +57,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
             android:text="CreaVision"
-            android:textSize="20sp"
+            android:textSize="25sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent" />
@@ -97,7 +99,7 @@
 
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/btnSupriseMe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
@@ -112,9 +114,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
+            android:background="@drawable/button_gradient"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/generate"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/guideline" />
@@ -133,7 +139,7 @@
             android:id="@+id/recyclerViewHome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -141,14 +147,27 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             tools:listitem="@layout/item_art_style_home" />
 
-        <ImageView
-            android:id="@+id/btnArtStyle"
+        <TextView
+            android:id="@+id/btnClearText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/forward_button"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
+            android:layout_marginBottom="15dp"
+            android:text="Clear Text"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextPrompt"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2" />
+
+        <TextView
+            android:id="@+id/btnSeeAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/see_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewHome"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
