@@ -75,7 +75,6 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextPrompt"
             app:strokeWidth="0dp">
 
-
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
@@ -88,18 +87,18 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/materialCardView2"
+            android:id="@+id/btnSupriseMe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:clickable="true"
             app:cardBackgroundColor="@color/text_field_background"
             app:layout_constraintStart_toEndOf="@+id/cardViewAspectRatio"
             app:layout_constraintTop_toTopOf="@+id/cardViewAspectRatio"
             app:strokeWidth="0dp">
 
-
             <TextView
-                android:id="@+id/btnSupriseMe"
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
@@ -114,10 +113,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
+            android:alpha="0.7"
             android:background="@drawable/button_gradient"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="@string/generate"
+            android:text="@string/create"
             android:textColor="@color/white"
             android:textSize="17sp"
             app:backgroundTint="@null"

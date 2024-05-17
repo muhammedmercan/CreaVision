@@ -93,7 +93,9 @@ class CreateFragment : Fragment() {
                             dataSource: DataSource,
                             isFirstResource: Boolean
                         ): Boolean {
-                            binding.progressBar.visibility = View.GONE
+                            //binding.progressBar.visibility = View.GONE
+                            binding.animationView.pauseAnimation()
+                            binding.animationView.visibility = View.GONE
                             binding.txtGenerating.visibility = View.GONE
                             return false
                         }
