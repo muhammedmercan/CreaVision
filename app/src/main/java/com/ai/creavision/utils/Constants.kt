@@ -5,7 +5,9 @@ import com.ai.creavision.domain.model.ArtStyle
 
 object Constants {
 
-    const val BASE_URL = "https://api.openai.com/v1/images/"
+    //const val BASE_URL = "https://api.openai.com/v1/images/"
+
+    const val BASE_URL = "https://api.replicate.com/v1/"
 
     val ART_STYLES = listOf(ArtStyle(R.drawable.colorful,"Colorful"), ArtStyle(R.drawable.creepy,"Creepy"),ArtStyle(R.drawable.colorful,"Ckmkolorful"),
         ArtStyle(R.drawable.colorful,"Colorflul"), ArtStyle(R.drawable.creepy,"Creepky"),ArtStyle(R.drawable.colorful,"Colozrfuhl"),

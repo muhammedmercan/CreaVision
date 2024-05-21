@@ -11,6 +11,20 @@
 
     </style>
 
+    <style name="CustomChipChoice" parent="Widget.MaterialComponents.Chip.Choice">
+        <!-- Stil özelleştirmeleri buraya gelecek -->
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipCornerRadius">30dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="chipMinHeight">40dp</item>
+        <item name="chipStartPadding">12dp</item>
+        <item name="chipEndPadding">12dp</item>
+        <item name="chipIconVisible">true</item>
+        <!-- Diğer özelleştirmeler -->
+    </style>
+
 
     <style name="Theme.CreaVision" parent="Base.Theme.CreaVision" />
 </resources>

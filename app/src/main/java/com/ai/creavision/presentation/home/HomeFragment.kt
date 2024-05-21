@@ -7,12 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
 import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentHomeBinding
 import com.ai.creavision.domain.model.ArtStyleBottomSheetModel
 import com.ai.creavision.domain.model.AspectRatioBottomSheetModel
+import com.ai.creavision.domain.model.Style
 import com.ai.creavision.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,9 +32,6 @@ class HomeFragment @Inject constructor(
     private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(artStyleAdapter)
 
 
-
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +47,7 @@ class HomeFragment @Inject constructor(
 
         onClick()
 
-
+        binding.recyclerViewHome.adapter = homeAdapter
 
         homeAdapter.artyStyleResponseList = Constants.ART_STYLES
 
@@ -72,8 +69,6 @@ class HomeFragment @Inject constructor(
                 }
             }
         })
-
-
     }
 
 
@@ -105,7 +100,12 @@ class HomeFragment @Inject constructor(
 
         binding.btnGenerate.setOnClickListener() {
 
-                val prompt = binding.editTextPrompt.text.toString()
+                var prompt = binding.editTextPrompt.text.toString()
+
+                if (!Style.getValue().isNullOrEmpty()) {
+                    prompt += ", style = "  + Style.getValue()
+                }
+
                 val args = Bundle()
                 args.putString("prompt", prompt)
                 findNavController().navigate(R.id.action_homeFragment_to_createFragment,args)

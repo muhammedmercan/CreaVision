@@ -3,11 +3,12 @@ package com.ai.creavision.presentation.create
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ai.creavision.domain.model.CreateImageModel
 import com.ai.creavision.domain.model.ImageResponse
+import com.ai.creavision.domain.model.PromptRequest
 import com.ai.creavision.domain.repository.RepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,10 +18,11 @@ class CreateViewModel @Inject constructor(
 
 ): ViewModel() {
 
-    val liveData = MutableLiveData<ImageResponse>()
+    val liveData = MutableLiveData<ImageResponse?>()
 
 
-    fun createImage(createImageModel: CreateImageModel) {
+
+    fun createImage(createImageModel: PromptRequest) {
 
         val handler = CoroutineExceptionHandler {context, throwable ->
             println(throwable)
@@ -32,9 +34,23 @@ class CreateViewModel @Inject constructor(
 
             if(response.isSuccessful) {
                 response.body()?.let {
-                    liveData.value = it
+
+                    val predictionId = it.urls?.get?.substringAfter("predictions/")
+
+                    while (true) {
+                        var update = repository.getUpdate(predictionId!!)
+                        if (update.body()?.status == "succeeded") {
+                            liveData.value = update.body()
+                            break
+                        }
+                        delay(2000)
+                    }
                 }
             }
         }
+    }
+
+    fun reset() {
+        liveData.value = null
     }
 }

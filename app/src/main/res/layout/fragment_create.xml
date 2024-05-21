@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@null"
     tools:context=".presentation.create.CreateFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,8 +17,9 @@
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="50dp"
-            android:src="@drawable/edit_text_shape"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            android:background="@drawable/edit_text_shape"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/btnShare"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
@@ -85,7 +85,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnShare"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
@@ -103,12 +103,12 @@
             app:iconSize="20dp"
             app:iconTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintEnd_toStartOf="@+id/btnDownload"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnDownload"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -127,7 +127,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button" />
+            app:layout_constraintStart_toEndOf="@+id/btnShare" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
