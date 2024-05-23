@@ -7,5 +7,6 @@ data class ImageResponse(
 
     @SerializedName("output")
     val imageUrl: List<String>,
-    val status: String
+    val status: String,
+    val error: String
 )

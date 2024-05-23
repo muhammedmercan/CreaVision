@@ -21,7 +21,6 @@ class CreateViewModel @Inject constructor(
     val liveData = MutableLiveData<ImageResponse?>()
 
 
-
     fun createImage(createImageModel: PromptRequest) {
 
         val handler = CoroutineExceptionHandler {context, throwable ->
@@ -39,7 +38,7 @@ class CreateViewModel @Inject constructor(
 
                     while (true) {
                         var update = repository.getUpdate(predictionId!!)
-                        if (update.body()?.status == "succeeded") {
+                        if (update.body()?.status == "succeeded" || update.body()?.status == "failed" ||  update.body()?.status == "canceled") {
                             liveData.value = update.body()
                             break
                         }
@@ -49,6 +48,7 @@ class CreateViewModel @Inject constructor(
             }
         }
     }
+
 
     fun reset() {
         liveData.value = null

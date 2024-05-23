@@ -17,6 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,6 +31,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -74,4 +76,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     implementation ("com.airbnb.android:lottie:3.4.0")
+
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }

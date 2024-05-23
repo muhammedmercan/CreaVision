@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentHomeBinding
 import com.ai.creavision.domain.model.ArtStyleBottomSheetModel
-import com.ai.creavision.domain.model.AspectRatioBottomSheetModel
 import com.ai.creavision.domain.model.Style
 import com.ai.creavision.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +27,6 @@ class HomeFragment @Inject constructor(
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val aspectRatioModalBottomSheet = AspectRatioBottomSheetModel()
     private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(artStyleAdapter)
 
 
@@ -74,10 +72,6 @@ class HomeFragment @Inject constructor(
 
     private fun onClick() {
 
-        binding.cardViewAspectRatio.setOnClickListener() {
-
-            aspectRatioModalBottomSheet.show(parentFragmentManager, AspectRatioBottomSheetModel.TAG)
-        }
 
         binding.btnSeeAll.setOnClickListener() {
 
@@ -100,6 +94,21 @@ class HomeFragment @Inject constructor(
 
         binding.btnGenerate.setOnClickListener() {
 
+                var width = 1024
+                var height = 1024
+
+                when(binding.chipGroupAspectRatio.checkedChipId) {
+                    binding.chip11.id -> {width = 1024; height = 1024 }
+                    binding.chip916.id -> {width = 768; height = 1360 }
+                    binding.chip169.id -> {width = 1360; height = 768 }
+                    binding.chip43.id -> {width = 1152; height = 864 }
+                    binding.chip34.id -> {width = 864; height = 1152 }
+                    binding.chip23.id -> {width = 768; height = 1152 }
+                    binding.chip32.id -> {width = 1152; height = 768 }
+
+                    else -> {width = 1024; height = 1024 }
+                }
+
                 var prompt = binding.editTextPrompt.text.toString()
 
                 if (!Style.getValue().isNullOrEmpty()) {
@@ -108,6 +117,8 @@ class HomeFragment @Inject constructor(
 
                 val args = Bundle()
                 args.putString("prompt", prompt)
+                args.putInt("width", width)
+                args.putInt("height", height)
                 findNavController().navigate(R.id.action_homeFragment_to_createFragment,args)
             }
         }
