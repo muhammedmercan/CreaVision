@@ -85,7 +85,7 @@ class HomeFragment @Inject constructor(
 
         binding.btnSupriseMe.setOnClickListener() {
             val random = (0..100).random()
-            binding.editTextPrompt.setText(Constants.PROMPTS[random])
+            binding.editTextPrompt.setText(Constants.RANDOM_PROMPTS[random])
         }
 
         artStyleAdapter.setOnItemClickListener {
@@ -110,13 +110,18 @@ class HomeFragment @Inject constructor(
                 }
 
                 var prompt = binding.editTextPrompt.text.toString()
+                var negativePrompt = ""
 
                 if (!Style.getValue().isNullOrEmpty()) {
-                    prompt += ", style = "  + Style.getValue()
+                    var resultPrompt = Constants.PROMPTS.get(Style.getValue())?.prompt.toString()
+                    resultPrompt = resultPrompt?.replace("{prompt}", prompt).toString()
+                    prompt = resultPrompt
+                    negativePrompt = Constants.PROMPTS.get(Style.getValue())?.negativePrompt.toString()
                 }
 
                 val args = Bundle()
                 args.putString("prompt", prompt)
+                args.putString("negativePrompt", negativePrompt)
                 args.putInt("width", width)
                 args.putInt("height", height)
                 findNavController().navigate(R.id.action_homeFragment_to_createFragment,args)

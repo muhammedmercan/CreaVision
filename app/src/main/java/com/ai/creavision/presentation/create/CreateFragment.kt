@@ -54,6 +54,7 @@ class CreateFragment : Fragment() {
 
 
     var prompt : String = ""
+    var negativePrompt : String = ""
     var width : Int = 0
     var height : Int = 0
     var imgUrl : String = ""
@@ -76,6 +77,7 @@ class CreateFragment : Fragment() {
 
         arguments.let {
             prompt = it?.getString("prompt").toString()!!
+            negativePrompt = it?.getString("negativePrompt").toString()!!
             width = it?.getInt("width")!!
             height = it?.getInt("height")!!
         }
@@ -97,7 +99,7 @@ class CreateFragment : Fragment() {
 
         resetUI()
         onClick()
-        viewModel.createImage(PromptRequest(input = Input(width = width, height = height , prompt = prompt)))
+        viewModel.createImage(PromptRequest(input = Input(width = width, height = height , prompt = prompt, negativePrompt = negativePrompt)))
 
         observeLiveData()
 

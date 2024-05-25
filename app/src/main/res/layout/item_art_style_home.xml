@@ -14,7 +14,7 @@
             android:id="@+id/imgArtStyle"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:src="@drawable/creepy"
+            android:src="@drawable/romantic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

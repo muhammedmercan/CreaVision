@@ -2,6 +2,7 @@ package com.ai.creavision.utils
 
 import com.ai.creavision.R
 import com.ai.creavision.domain.model.ArtStyle
+import com.ai.creavision.domain.model.ArtStylePrompt
 
 object Constants {
 
@@ -9,20 +10,25 @@ object Constants {
 
     const val BASE_URL = "https://api.replicate.com/v1/"
 
-    val ART_STYLES = listOf(ArtStyle(R.drawable.colorful,"Colorful"), ArtStyle(R.drawable.creepy,"Creepy"),ArtStyle(R.drawable.colorful,"Ckmkolorful"),
-        ArtStyle(R.drawable.colorful,"Colorflul"), ArtStyle(R.drawable.creepy,"Creepky"),ArtStyle(R.drawable.colorful,"Colozrfuhl"),
-        ArtStyle(R.drawable.colorful,"Coloasdrful"), ArtStyle(R.drawable.creepy,"Crekepy"),ArtStyle(R.drawable.colorful,"Coloxrful"),
-        ArtStyle(R.drawable.colorful,"Colordful"), ArtStyle(R.drawable.creepy,"Crejepy"),ArtStyle(R.drawable.colorful,"Colorfcul"),
-        ArtStyle(R.drawable.colorful,"Colorfqwul"), ArtStyle(R.drawable.creepy,"Crehepy"),ArtStyle(R.drawable.colorful,"Colobrful"),
-        ArtStyle(R.drawable.colorful,"Colorfwul"), ArtStyle(R.drawable.creepy,"Cregepy"),ArtStyle(R.drawable.colorful,"Colorvful"),
-        ArtStyle(R.drawable.colorful,"Coloreful"), ArtStyle(R.drawable.creepy,"Creefpy"),ArtStyle(R.drawable.colorful,"Colorf<ul"),
-        ArtStyle(R.drawable.colorful,"Colorrful"), ArtStyle(R.drawable.creepy,"Creepdy"),ArtStyle(R.drawable.colorful,"Colorzful"),
-        ArtStyle(R.drawable.colorful,"Colortful"), ArtStyle(R.drawable.creepy,"Creespy"),ArtStyle(R.drawable.colorful,"Colorxful"),
-        ArtStyle(R.drawable.colorful,"Coloryful"), ArtStyle(R.drawable.creepy,"Creaepy"),ArtStyle(R.drawable.colorful,"Colorcful"))
 
 
+    var PROMPTS = mapOf(
+        "Space art" to ArtStylePrompt(R.drawable.space_art,"galactic style {prompt} . nebula, constellation, cosmic, celestial, highly detailed, starry","blurry, grainy, deformed, photo-realistic, low-contrast, terrestrial"),
+        "Romantic" to ArtStylePrompt(R.drawable.romantic,"romantic style {prompt} . emotional, dramatic, nature-focused, detailed","unemotional, flat, city-focused, low detail"),
+        "Pixelated" to ArtStylePrompt(R.drawable.pixelated,"pixelated style {prompt} . retro, low-res, digital, blocky","modern, high-res, organic, smooth"),
+        "Futuristic" to ArtStylePrompt(R.drawable.futuristic,"futuristic {prompt} . advanced, high-tech, sleek, modern","old, low-tech, chunky, historical"),
+        "Surrealist" to ArtStylePrompt(R.drawable.surrealist,"surrealist {prompt} . dream-like, bizarre, irrational, highly detailed","realistic, mundane, rational, low detail"),
+        "Photorealistic" to ArtStylePrompt(R.drawable.photorealistic,"photorealistic {prompt} . highly detailed, lifelike, precise, accurate","abstract, low detail, unrealistic, inaccurate"),
+        "Victorian" to ArtStylePrompt(R.drawable.victorian,"Victorian style {prompt} . 19th century, ornate, romantic, highly detailed","21st century, minimal, unemotional, undetailed"),
+        "Expressionist" to ArtStylePrompt(R.drawable.expressionist,"expressionist style {prompt} . emotional, intense, vibrant, highly detailed","emotionless, calm, muted, low detail"))
 
-    val PROMPTS = listOf(
+
+    val ART_STYLES = PROMPTS.map { (name, prompt) ->
+        ArtStyle(prompt.image, name)
+    }
+
+
+    val RANDOM_PROMPTS = listOf(
         "A surreal landscape with floating islands covered in lush greenery, cascading waterfalls pouring into the sky, and glowing bioluminescent plants illuminating the surroundings under a sky filled with vibrant, swirling auroras.",
         "A futuristic cityscape at night, featuring towering skyscrapers with neon lights, flying cars zipping through the air, holographic advertisements projecting from buildings, and robots walking among the people.",
         "A fierce dragon warrior clad in ornate, spiked armor, wielding a flaming sword, standing in a mystical forest with ancient runes glowing in the background and a dragon perched on a nearby cliff.",
