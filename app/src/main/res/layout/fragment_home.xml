@@ -112,7 +112,7 @@
             android:text="@string/art_style"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/btnSupriseMe" />
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewHome"
@@ -130,12 +130,12 @@
             android:id="@+id/btnClearText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:text="Clear Text"
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextPrompt"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2" />
+            app:layout_constraintBottom_toBottomOf="@+id/btnSupriseMe"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/btnSupriseMe" />
 
         <TextView
             android:id="@+id/btnSeeAll"
@@ -150,6 +150,7 @@
 
 
         <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -175,50 +176,55 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="1 : 1"
-                    app:chipIcon="@drawable/aspect_ratio_9_16"
-                    app:chipIconTint="@color/chip_icon" />
+                    app:chipIcon="@drawable/aspect_ratio_1_1" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip9.16"
                     style="@style/CustomChipChoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="9 : 16" />
+                    android:text="9 : 16"
+                    app:chipIcon="@drawable/aspect_ratio_9_16" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip16.9"
                     style="@style/CustomChipChoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="16 : 9" />
+                    android:text="16 : 9"
+                    app:chipIcon="@drawable/aspect_ratio_16_9" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip4.3"
                     style="@style/CustomChipChoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4 : 3" />
+                    android:text="4 : 3"
+                    app:chipIcon="@drawable/aspect_ratio_4_3" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip3.4"
                     style="@style/CustomChipChoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3 : 4" />
+                    android:text="3 : 4"
+                    app:chipIcon="@drawable/aspect_ratio_3_4" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip2.3"
                     style="@style/CustomChipChoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2 : 3" />
+                    android:text="2 : 3"
+                    app:chipIcon="@drawable/aspect_ratio_2_3" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip3.2"
                     style="@style/CustomChipChoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3 : 2" />
+                    android:text="3 : 2"
+                    app:chipIcon="@drawable/aspect_ratio_3_2" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -232,7 +238,7 @@
             android:text="@string/aspect_ratio"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerViewHome" />
+            app:layout_constraintTop_toBottomOf="@+id/btnSupriseMe" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
