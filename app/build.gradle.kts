@@ -78,4 +78,7 @@ dependencies {
     implementation ("com.airbnb.android:lottie:3.4.0")
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+
+    implementation ("com.google.android.gms:play-services-ads:23.1.0")
+
 }

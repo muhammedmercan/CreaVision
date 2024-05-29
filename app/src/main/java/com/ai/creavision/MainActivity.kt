@@ -3,6 +3,7 @@ package com.ai.creavision
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ai.creavision.presentation.home.CreaVisionFragmentFactory
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -16,5 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportFragmentManager.fragmentFactory = fragmentFactory
         setContentView(R.layout.activity_main)
+
     }
 }

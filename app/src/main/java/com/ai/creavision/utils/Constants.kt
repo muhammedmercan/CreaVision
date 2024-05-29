@@ -10,6 +10,9 @@ object Constants {
 
     const val BASE_URL = "https://api.replicate.com/v1/"
 
+    private const val REWARDED_AD = "ca-app-pub-3940256099942544/5224354917"
+
+
 
 
     var PROMPTS = mapOf(

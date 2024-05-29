@@ -239,7 +239,7 @@ class CreateFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 saveImage(Glide.with(requireContext())
                     .asBitmap()
-                    .load("https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg") // sample image
+                    .load(imgUrl) // sample image
                     .placeholder(android.R.drawable.progress_indeterminate_horizontal) // need placeholder to avoid issue like glide annotations
                     .error(android.R.drawable.stat_notify_error) // need error to avoid issue like glide annotations
                     .submit()
