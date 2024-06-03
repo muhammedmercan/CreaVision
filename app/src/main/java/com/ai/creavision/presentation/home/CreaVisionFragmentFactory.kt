@@ -1,5 +1,6 @@
 package com.ai.creavision.presentation.home
 
+import FullScreenDialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.ai.creavision.presentation.create.CreateFragment
@@ -15,6 +16,7 @@ class CreaVisionFragmentFactory @Inject constructor(
         return when(className){
             HomeFragment::class.java.name -> HomeFragment(HomeAdapter(), ArtStyleAdapter())
             CreateFragment::class.java.name -> CreateFragment()
+            FullScreenDialogFragment::class.java.name -> FullScreenDialogFragment()
 
             else -> super.instantiate(classLoader, className)
         }

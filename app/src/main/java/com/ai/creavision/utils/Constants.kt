@@ -23,7 +23,9 @@ object Constants {
         "Surrealist" to ArtStylePrompt(R.drawable.surrealist,"surrealist {prompt} . dream-like, bizarre, irrational, highly detailed","realistic, mundane, rational, low detail"),
         "Photorealistic" to ArtStylePrompt(R.drawable.photorealistic,"photorealistic {prompt} . highly detailed, lifelike, precise, accurate","abstract, low detail, unrealistic, inaccurate"),
         "Victorian" to ArtStylePrompt(R.drawable.victorian,"Victorian style {prompt} . 19th century, ornate, romantic, highly detailed","21st century, minimal, unemotional, undetailed"),
-        "Expressionist" to ArtStylePrompt(R.drawable.expressionist,"expressionist style {prompt} . emotional, intense, vibrant, highly detailed","emotionless, calm, muted, low detail"))
+        "Expressionist" to ArtStylePrompt(R.drawable.expressionist,"expressionist style {prompt} . emotional, intense, vibrant, highly detailed","emotionless, calm, muted, low detail"),
+        "Frozen" to ArtStylePrompt(R.drawable.frozen,"Frozen 2 {prompt} . Animated, fairytale, sisterhood, highly detailed","live-action, realism, rivalry, undetailed"),
+        "Game of T." to ArtStylePrompt(R.drawable.game_of_thrones,"Game of Thrones {prompt} . Fantasy, Westeros, dragons, highly detailed","science fiction, no dragons, undetailed"))
 
 
     val ART_STYLES = PROMPTS.map { (name, prompt) ->

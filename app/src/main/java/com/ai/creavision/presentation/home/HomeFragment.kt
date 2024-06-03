@@ -1,5 +1,6 @@
 package com.ai.creavision.presentation.home
 
+import FullScreenDialogFragment
 import android.Manifest
 import android.os.Bundle
 import android.text.Editable
@@ -9,11 +10,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentHomeBinding
 import com.ai.creavision.domain.model.ArtStyleBottomSheetModel
 import com.ai.creavision.domain.model.ArtStyleBottomSheetModel.Companion.TAG
+import com.ai.creavision.domain.model.PremiumBottomSheetModel
 import com.ai.creavision.domain.model.Style
 import com.ai.creavision.utils.Constants
 import com.ai.creavision.utils.NetworkUtils
@@ -43,13 +46,15 @@ class HomeFragment @Inject constructor(
     private val binding get() = _binding!!
 
     private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(artStyleAdapter)
-
+    private val premiumModalBottomSheet = PremiumBottomSheetModel()
 
 
     private var rewardedAd: RewardedAd? = null
     private final var TAG = "MainActivity"
 
     private var isLoading = false
+
+    private var premium = true
 
 
 
@@ -106,16 +111,16 @@ class HomeFragment @Inject constructor(
                 if (inputText.isEmpty()) {
                     binding.btnGenerate.alpha = 0.5F
                     binding.btnGenerate.isClickable = false
+                    binding.btnGenerate.isEnabled = false
                 } else {
                     binding.btnGenerate.alpha = 1F
                     binding.btnGenerate.isClickable = true
+                    binding.btnGenerate.isEnabled = true
 
                 }
             }
         })
     }
-
-
 
 
     private fun onClick() {
@@ -136,6 +141,26 @@ class HomeFragment @Inject constructor(
             binding.editTextPrompt.setText(Constants.RANDOM_PROMPTS[random])
         }
 
+        binding.btnPremium.setOnClickListener() {
+
+            val fullScreenDialogFragment = FullScreenDialogFragment()
+            val transaction = parentFragmentManager.beginTransaction()
+            // For a polished look, specify a transition animation.
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity.
+
+            findNavController().navigate(R.id.action_homeFragment_to_fullScreenDialogFragment)
+            /*
+            transaction
+                .add(android.R.id.content, fullScreenDialogFragment)
+                .addToBackStack(null)
+                .commit()
+
+             */
+
+        }
+
         artStyleAdapter.setOnItemClickListener {
             binding.recyclerViewHome.adapter?.notifyDataSetChanged()
         }
@@ -144,12 +169,18 @@ class HomeFragment @Inject constructor(
 
             if (checkInternetConnection()) {
 
-                if (rewardedAd != null) {
-                    showRewardedAd()
+                if (!premium) {
+
+                    if (rewardedAd != null) {
+                        showRewardedAd()
+                    } else {
+                        Snackbar.make(requireView(), "Error Load Ads", Snackbar.LENGTH_SHORT).show()
+                    }
                 } else {
-                    Snackbar.make(requireView(), "Error Load Ads", Snackbar.LENGTH_SHORT).show()
+                    goCreate()
                 }
             }
+
             }
         }
 

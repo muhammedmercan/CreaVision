@@ -2,7 +2,7 @@
 <resources>
 
     <style name="circular">
-        <item name="cornerSize">10%</item>
+        <item name="cornerSize">5%</item>
     </style>
 
 

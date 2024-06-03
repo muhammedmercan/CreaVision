@@ -22,6 +22,7 @@
         <item name="chipEndPadding">12dp</item>
         <item name="chipIconVisible">true</item>
         <item name="chipIconSize">20dp</item>
+        <item name="extraMultilineHeightEnabled">true</item>
         <!-- Diğer özelleştirmeler -->
     </style>
 

@@ -13,10 +13,17 @@
         <action
             android:id="@+id/action_homeFragment_to_createFragment"
             app:destination="@id/createFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_fullScreenDialogFragment"
+            app:destination="@id/fullScreenDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/createFragment"
         android:name="com.ai.creavision.presentation.create.CreateFragment"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create" />
+    <dialog
+        android:id="@+id/fullScreenDialogFragment"
+        android:name="FullScreenDialogFragment"
+        android:label="FullScreenDialogFragment" />
 </navigation>

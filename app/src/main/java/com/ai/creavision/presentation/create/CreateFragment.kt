@@ -156,7 +156,13 @@ class CreateFragment : Fragment() {
 
                             bitmap = (resource as BitmapDrawable).bitmap
 
-                            println(imgUrl)
+                            binding.btnShare.isClickable = true
+                            binding.btnShare.isEnabled = true
+                            binding.btnDownload.isClickable = true
+                            binding.btnDownload.isEnabled = true
+
+                            binding.btnShare.alpha = 1F
+                            binding.btnDownload.alpha = 1F
 
 
                             return false
