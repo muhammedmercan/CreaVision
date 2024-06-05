@@ -1,4 +1,4 @@
-package com.ai.creavision.presentation.create
+package com.ai.creavision.presentation.results
 
 import android.Manifest
 import android.content.Intent
@@ -20,21 +20,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
-import com.ai.creavision.databinding.FragmentCreateBinding
-import com.ai.creavision.domain.model.Input
-import com.ai.creavision.domain.model.PromptRequest
+import com.ai.creavision.databinding.FragmentSingleResultBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,22 +39,16 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-@AndroidEntryPoint
-class CreateFragment : Fragment() {
+class SingleResultFragment : Fragment() {
 
-    private var _binding: FragmentCreateBinding? = null
+
+    private var _binding: FragmentSingleResultBinding? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: CreateViewModel
+    lateinit var viewModel: AllResultsViewModel
 
+    private var imgUrl = ""
 
-    var prompt : String = ""
-    var negativePrompt : String = ""
-    var width : Int = 0
-    var height : Int = 0
-    var imgUrl : String = ""
-
-    lateinit var bitmap : Bitmap
-
+    lateinit var bitmap: Bitmap
 
     private val appPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
@@ -76,10 +64,8 @@ class CreateFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         arguments.let {
-            prompt = it?.getString("prompt").toString()!!
-            negativePrompt = it?.getString("negativePrompt").toString()!!
-            width = it?.getInt("width")!!
-            height = it?.getInt("height")!!
+            imgUrl = it?.getString("imgUrl").toString()
+
         }
     }
 
@@ -88,91 +74,95 @@ class CreateFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentCreateBinding.inflate(inflater, container, false)
+        _binding = FragmentSingleResultBinding.inflate(inflater, container, false)
         val view = binding.root
-        return view    }
-
+        return view        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity()).get(CreateViewModel::class.java)
 
-        resetUI()
+        init()
         onClick()
-        viewModel.createImage(PromptRequest(input = Input(width = width, height = height , prompt = prompt, negativePrompt = negativePrompt)))
 
-        observeLiveData()
 
     }
 
-    private fun observeLiveData() {
+    private fun init() {
 
-        viewModel.liveData.observe(viewLifecycleOwner, Observer {  imageResponse ->
+        Glide
+            .with(this)
+            .load(imgUrl)
+            //.override(500,500)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    TODO("Not yet implemented")
+                }
 
-            Toast.makeText(requireContext(), "Geldi", Toast.LENGTH_LONG)
-                .show()
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
 
-            imageResponse?.let {
+                    bitmap = (resource as BitmapDrawable).bitmap
 
-                if (!imageResponse.error.isNullOrEmpty()) {
-                    MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("Error")
-                        .setMessage(it.error)
-                        .setPositiveButton("Understand") { dialog, which ->
-                            dialog.dismiss()
-                            findNavController().popBackStack()
+                    binding.btnShare.isClickable = true
+                    binding.btnShare.isEnabled = true
+                    binding.btnDownload.isClickable = true
+                    binding.btnDownload.isEnabled = true
 
-                        }
-                        .show()
-                } else {
+                    binding.btnShare.alpha = 1F
+                    binding.btnDownload.alpha = 1F
 
-                imgUrl = imageResponse.imageUrl[0]
+                    return false
+                }
 
-                Glide
-                    .with(this)
-                    .load(imgUrl)
-                    //.override(500,500)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            TODO("Not yet implemented")
-                        }
+            })
+            .into(binding.imageView)
 
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            model: Any,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            //binding.progressBar.visibility = View.GONE
-                            binding.animationView.pauseAnimation()
-                            binding.animationView.visibility = View.GONE
-                            binding.txtGenerating.visibility = View.GONE
+    }
 
-                            bitmap = (resource as BitmapDrawable).bitmap
-
-                            binding.btnShare.isClickable = true
-                            binding.btnShare.isEnabled = true
-                            binding.btnDownload.isClickable = true
-                            binding.btnDownload.isEnabled = true
-
-                            binding.btnShare.alpha = 1F
-                            binding.btnDownload.alpha = 1F
+    private fun onClick() {
 
 
-                            return false
-                        }
+        binding.btnShare.setOnClickListener() {
+            val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
+            binding.btnShare.startAnimation(pulsateAnimation)
+            shareImage(bitmap)
+        }
 
-                    })
-                    .into(binding.imageView)
+        binding.btnDownload.setOnClickListener() {
+            permissionNotification()
+
+            Snackbar.make(requireView(), R.string.image_downloading, Snackbar.LENGTH_SHORT).show()
+
+            CoroutineScope(Dispatchers.IO).launch {
+                saveImage(
+                    Glide.with(requireContext())
+                        .asBitmap()
+                        .load(imgUrl) // sample image
+                        .placeholder(android.R.drawable.progress_indeterminate_horizontal) // need placeholder to avoid issue like glide annotations
+                        .error(android.R.drawable.stat_notify_error) // need error to avoid issue like glide annotations
+                        .submit()
+                        .get()
+                )
             }
-        }}
-        )
+        }
+
+
+
+        binding.btnBack.setOnClickListener() {
+
+            findNavController().popBackStack()
+
+        }
     }
 
     private fun permissionNotification(){
@@ -197,11 +187,15 @@ class CreateFragment : Fragment() {
                     ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     Snackbar.make(requireView(), "Permission needed for gallery", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission",
                         View.OnClickListener {
-                            appPermissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                            appPermissionLauncher.launch(arrayOf(
+                                Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE))
                         }).show()
                 }
                 else {//Eğer daha önce sorulmamışsa yapılacak işlemler
-                    appPermissionLauncher.launch(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                    appPermissionLauncher.launch(arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 }
             }
         }
@@ -227,39 +221,6 @@ class CreateFragment : Fragment() {
         }
         startActivity(Intent.createChooser(shareIntent, "Paylaş"))
     }
-
-
-    private fun onClick() {
-
-        binding.btnShare.setOnClickListener() {
-            val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
-            binding.btnShare.startAnimation(pulsateAnimation)
-            shareImage(bitmap)
-        }
-
-        binding.btnDownload.setOnClickListener() {
-            permissionNotification()
-
-            Snackbar.make(requireView(), R.string.image_downloading, Snackbar.LENGTH_SHORT).show()
-
-            CoroutineScope(Dispatchers.IO).launch {
-                saveImage(Glide.with(requireContext())
-                    .asBitmap()
-                    .load(imgUrl) // sample image
-                    .placeholder(android.R.drawable.progress_indeterminate_horizontal) // need placeholder to avoid issue like glide annotations
-                    .error(android.R.drawable.stat_notify_error) // need error to avoid issue like glide annotations
-                    .submit()
-                    .get())
-            }
-        }
-
-        binding.btnBack.setOnClickListener() {
-
-            findNavController().popBackStack()
-
-        }
-    }
-
 
     private fun saveImage(image: Bitmap): String? {
         var savedImagePath: String? = null
@@ -301,7 +262,6 @@ class CreateFragment : Fragment() {
         return savedImagePath
     }
 
-
     private fun galleryAddPic(imagePath: String?) {
         imagePath?.let { path ->
             val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
@@ -310,12 +270,5 @@ class CreateFragment : Fragment() {
             mediaScanIntent.data = contentUri
             requireContext().sendBroadcast(mediaScanIntent)
         }
-    }
-
-    private fun resetUI() {
-        binding.animationView.visibility = View.VISIBLE
-        binding.imageView.setImageDrawable(null)
-        binding.animationView.playAnimation()
-        viewModel.reset()
     }
 }

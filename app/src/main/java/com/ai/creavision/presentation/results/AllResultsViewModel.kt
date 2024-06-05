@@ -1,4 +1,4 @@
-package com.ai.creavision.presentation.create
+package com.ai.creavision.presentation.results
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateViewModel @Inject constructor(
+class AllResultsViewModel @Inject constructor(
     private val repository: RepositoryInterface
 
 ): ViewModel() {

@@ -12,18 +12,31 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_to_createFragment"
-            app:destination="@id/createFragment" />
+            app:destination="@id/allResultsFragment" />
         <action
             android:id="@+id/action_homeFragment_to_fullScreenDialogFragment"
             app:destination="@id/fullScreenDialogFragment" />
     </fragment>
     <fragment
-        android:id="@+id/createFragment"
-        android:name="com.ai.creavision.presentation.create.CreateFragment"
+        android:id="@+id/allResultsFragment"
+        android:name="com.ai.creavision.presentation.results.AllResultsFragment"
         android:label="fragment_create"
-        tools:layout="@layout/fragment_create" />
+        tools:layout="@layout/fragment_all_results" >
+        <action
+            android:id="@+id/action_createFragment_to_singleResultFragment"
+            app:destination="@id/singleResultFragment" />
+    </fragment>
     <dialog
         android:id="@+id/fullScreenDialogFragment"
         android:name="FullScreenDialogFragment"
         android:label="FullScreenDialogFragment" />
+    <fragment
+        android:id="@+id/singleResultFragment"
+        android:name="com.ai.creavision.presentation.results.SingleResultFragment"
+        android:label="SingleResultFragment" >
+        <action
+            android:id="@+id/action_singleResultFragment_to_createFragment"
+            app:destination="@id/allResultsFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>
