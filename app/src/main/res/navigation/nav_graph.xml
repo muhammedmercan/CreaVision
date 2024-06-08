@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_fullScreenDialogFragment"
             app:destination="@id/fullScreenDialogFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_allOldResultsFragment"
+            app:destination="@id/allOldResultsFragment" />
     </fragment>
     <fragment
         android:id="@+id/allResultsFragment"
@@ -39,4 +42,9 @@
             app:destination="@id/allResultsFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/allOldResultsFragment"
+        android:name="com.ai.creavision.presentation.old_results.YourArtsFragment"
+        android:label="fragment_all_old_results"
+        tools:layout="@layout/fragment_your_arts" />
 </navigation>

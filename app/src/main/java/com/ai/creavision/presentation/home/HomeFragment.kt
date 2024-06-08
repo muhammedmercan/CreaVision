@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentHomeBinding
 import com.ai.creavision.domain.model.ArtStyleBottomSheetModel
@@ -29,6 +30,7 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -96,6 +98,7 @@ class HomeFragment @Inject constructor(
         loadRewardedAd()
 
 
+
         binding.recyclerViewHome.adapter = homeAdapter
 
         homeAdapter.artyStyleResponseList = Constants.ART_STYLES
@@ -143,6 +146,7 @@ class HomeFragment @Inject constructor(
 
         binding.btnPremium.setOnClickListener() {
 
+
             val fullScreenDialogFragment = FullScreenDialogFragment()
             val transaction = parentFragmentManager.beginTransaction()
             // For a polished look, specify a transition animation.
@@ -151,13 +155,7 @@ class HomeFragment @Inject constructor(
             // for the fragment, which is always the root view for the activity.
 
             findNavController().navigate(R.id.action_homeFragment_to_fullScreenDialogFragment)
-            /*
-            transaction
-                .add(android.R.id.content, fullScreenDialogFragment)
-                .addToBackStack(null)
-                .commit()
 
-             */
 
         }
 

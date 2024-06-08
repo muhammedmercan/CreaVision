@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentAllResultsBinding
 import com.ai.creavision.domain.model.Input
@@ -60,10 +61,10 @@ class AllResultsFragment : Fragment() {
         return view
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(AllResultsViewModel::class.java)
+
 
         onClick()
 
@@ -78,10 +79,8 @@ class AllResultsFragment : Fragment() {
                     )
                 )
             )
-
         }
         observeLiveData()
-
     }
 
 
