@@ -1,11 +1,15 @@
-package com.ai.creavision.presentation.old_results
+package com.ai.creavision.presentation.your_arts
 
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ai.creavision.R
 import com.ai.creavision.databinding.ItemArtBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,7 +19,7 @@ import javax.inject.Inject
 
 class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapter.ViewHolder>() {
 
-    private var onItemClickListener : ((Int) -> Unit)? = null
+    private var onItemClickListener : ((String) -> Unit)? = null
 
 
     private val diffUtil = object : DiffUtil.ItemCallback<File>() {
@@ -46,11 +50,13 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
         return ViewHolder(binding)
     }
 
-    fun setOnItemClickListener(listener : (Int) -> Unit) {
+    fun setOnItemClickListener(listener : (String) -> Unit) {
         onItemClickListener = listener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+
 
 
         Glide.with(holder.itemView)
@@ -61,6 +67,7 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
 
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {
+                it(photoFiles?.get(position)?.path!!)
             }
         }
 

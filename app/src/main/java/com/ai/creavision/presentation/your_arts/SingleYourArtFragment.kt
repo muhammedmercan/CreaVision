@@ -18,11 +18,14 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentSingleResultBinding
+import com.ai.creavision.databinding.FragmentSingleYourArtBinding
 import com.ai.creavision.presentation.BaseFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -41,19 +44,18 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 
-class SingleResultFragment : BaseFragment() {
+class SingleYourArtFragment : BaseFragment() {
 
-    private var _binding: FragmentSingleResultBinding? = null
+    private var _binding: FragmentSingleYourArtBinding? = null
     private val binding get() = _binding!!
-    private var imgUrl = ""
     lateinit var bitmap: Bitmap
-
+    private var imgFile = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments.let {
-            imgUrl = it?.getString("imgUrl").toString()
+            imgFile = it?.getString("imgFile").toString()
         }
     }
 
@@ -62,57 +64,59 @@ class SingleResultFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentSingleResultBinding.inflate(inflater, container, false)
+        _binding = FragmentSingleYourArtBinding.inflate(inflater, container, false)
         val view = binding.root
-        return view        }
+        return view
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         init()
         onClick()
-        }
+    }
 
     private fun init() {
 
-            Glide
-                .with(this)
-                .load(imgUrl)
-                //.override(500,500)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        TODO("Not yet implemented")
-                    }
+        Glide
+            .with(this)
+            .load(File(imgFile))
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    TODO("Not yet implemented")
+                }
 
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
 
-                        bitmap = (resource as BitmapDrawable).bitmap
+                    bitmap = (resource as BitmapDrawable).bitmap
 
-                        binding.btnShare.isClickable = true
-                        binding.btnShare.isEnabled = true
-                        binding.btnDownload.isClickable = true
-                        binding.btnDownload.isEnabled = true
+                    binding.btnShare.isClickable = true
+                    binding.btnShare.isEnabled = true
+                    binding.btnDownload.isClickable = true
+                    binding.btnDownload.isEnabled = true
 
-                        binding.btnShare.alpha = 1F
-                        binding.btnDownload.alpha = 1F
+                    binding.btnShare.alpha = 1F
+                    binding.btnDownload.alpha = 1F
 
-                        return false
-                    }
-                })
-                .into(binding.imageView)
+                    return false
+                }
+            })
+            .into(binding.imageView)
+
     }
-
 
     private fun onClick() {
 
@@ -132,7 +136,6 @@ class SingleResultFragment : BaseFragment() {
 
         binding.btnBack.setOnClickListener() {
             findNavController().popBackStack()
-
         }
     }
 }

@@ -44,7 +44,15 @@
     </fragment>
     <fragment
         android:id="@+id/allOldResultsFragment"
-        android:name="com.ai.creavision.presentation.old_results.YourArtsFragment"
+        android:name="com.ai.creavision.presentation.your_arts.YourArtsFragment"
         android:label="fragment_all_old_results"
-        tools:layout="@layout/fragment_your_arts" />
+        tools:layout="@layout/fragment_your_arts" >
+        <action
+            android:id="@+id/action_allOldResultsFragment_to_singleYourArtFragment"
+            app:destination="@id/singleYourArtFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleYourArtFragment"
+        android:name="com.ai.creavision.presentation.results.SingleYourArtFragment"
+        android:label="SingleYourArtFragment" />
 </navigation>
