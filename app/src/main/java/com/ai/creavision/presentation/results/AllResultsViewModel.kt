@@ -1,5 +1,6 @@
 package com.ai.creavision.presentation.results
 
+import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllResultsViewModel @Inject constructor(
-    private val repository: RepositoryInterface
+    private val repository: RepositoryInterface,
+    private val sharedPreferences: SharedPreferences
 
 ): ViewModel() {
 

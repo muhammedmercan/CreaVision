@@ -18,7 +18,10 @@
             app:destination="@id/fullScreenDialogFragment" />
         <action
             android:id="@+id/action_homeFragment_to_allOldResultsFragment"
-            app:destination="@id/allOldResultsFragment" />
+            app:destination="@id/yourArtsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_paywallUiFragment"
+            app:destination="@id/paywallUiFragment" />
     </fragment>
     <fragment
         android:id="@+id/allResultsFragment"
@@ -43,7 +46,7 @@
             app:popUpToInclusive="true"/>
     </fragment>
     <fragment
-        android:id="@+id/allOldResultsFragment"
+        android:id="@+id/yourArtsFragment"
         android:name="com.ai.creavision.presentation.your_arts.YourArtsFragment"
         android:label="fragment_all_old_results"
         tools:layout="@layout/fragment_your_arts" >
@@ -55,4 +58,8 @@
         android:id="@+id/singleYourArtFragment"
         android:name="com.ai.creavision.presentation.results.SingleYourArtFragment"
         android:label="SingleYourArtFragment" />
+    <fragment
+        android:id="@+id/paywallUiFragment"
+        android:name="com.ai.creavision.PaywallUiFragment"
+        android:label="PaywallUiFragment" />
 </navigation>

@@ -1,6 +1,7 @@
 package com.ai.creavision.presentation.results
 
 
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentAllResultsBinding
 import com.ai.creavision.domain.model.Input
 import com.ai.creavision.domain.model.PromptRequest
+import com.ai.creavision.utils.DataHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -31,7 +33,7 @@ class AllResultsFragment : Fragment() {
 
     private var _binding: FragmentAllResultsBinding? = null
     private val binding get() = _binding!!
-    lateinit var viewModel: AllResultsViewModel
+    private lateinit var viewModel: AllResultsViewModel
 
 
     var prompt: String = ""
@@ -104,6 +106,8 @@ class AllResultsFragment : Fragment() {
                         }
                         .show()
                 } else {
+                    DataHolder.currentGlideCache = false
+
 
                     setImageViewClickListener(binding.imageView, imageResponse.imageUrl[0])
                     setImageViewClickListener(binding.imageView2, imageResponse.imageUrl[1])

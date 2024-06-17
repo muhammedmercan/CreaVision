@@ -6,7 +6,7 @@
         android:icon="@drawable/create_art_icon"
         android:title="Create Art" />
     <item
-        android:id="@+id/allOldResultsFragment"
+        android:id="@+id/yourArtsFragment"
         android:icon="@drawable/your_arts_icon"
         android:title="Your Arts" />
 

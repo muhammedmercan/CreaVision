@@ -8,7 +8,7 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/edit_text_shape"
         android:scaleType="fitCenter"
@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/circular"
-        app:srcCompat="@drawable/frozen" />
+        app:srcCompat="@drawable/frozen"
+        android:adjustViewBounds="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

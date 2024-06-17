@@ -4,6 +4,7 @@ plugins {
     id ("androidx.navigation.safeargs.kotlin")
     id ("com.google.dagger.hilt.android")
     id ("com.google.devtools.ksp")
+
 }
 
 android {
@@ -14,8 +15,8 @@ android {
         applicationId = "com.ai.creavision"
         minSdk = 23
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.2"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -52,6 +53,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.runtime.android)
+    implementation(libs.play.services.analytics.impl)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -68,6 +71,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.4")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.4")
 
+
     //Hilt
     implementation ("com.google.dagger:hilt-android:2.48")
     ksp("com.google.dagger:hilt-compiler:2.48")
@@ -81,5 +85,16 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
     implementation ("com.google.android.gms:play-services-ads:23.1.0")
+
+    implementation("com.android.billingclient:billing:7.0.0")
+
+    implementation("com.google.firebase:firebase-crashlytics-buildtools:3.0.0")
+
+    //implementation("com.github.akshaaatt:Google-IAP:1.6.0")
+
+    implementation("io.adapty:android-sdk:2.11.2")
+    implementation("io.adapty:android-ui:2.11.0")
+
+
 
 }

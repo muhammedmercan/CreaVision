@@ -22,21 +22,21 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
     private var onItemClickListener : ((String) -> Unit)? = null
 
 
-    private val diffUtil = object : DiffUtil.ItemCallback<File>() {
-        override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
+
+    private val diffUtil = object : DiffUtil.ItemCallback<String>() {
+        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
             return oldItem == newItem
         }
-        override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
-            return  oldItem == newItem
+        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+            return oldItem == newItem
         }
     }
 
     private val recyclerListDiffer = AsyncListDiffer(this, diffUtil)
 
-    var photoFiles: List<File>?
+    var photoFiles: List<String>?
         get() = recyclerListDiffer.currentList
         set(value) = recyclerListDiffer.submitList(value)
-
 
 
 
@@ -56,22 +56,27 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        println(photoFiles?.get(position))
 
 
-
-        Glide.with(holder.itemView)
+        Glide.with(holder.itemView.context)
             .load(photoFiles?.get(position))
             .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
+            .thumbnail(0.1f)
+            //.override(1024,1024)
+            //.encodeQuality(30)
+            //.placeholder(R.drawable.ic_launcher_background)
+            //.skipMemoryCache(true)
             .into(holder.binding.imageView)
 
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {
-                it(photoFiles?.get(position)?.path!!)
+                it(photoFiles?.get(position)!!)
             }
         }
 
     }
+
 
     override fun getItemCount(): Int {
         return photoFiles!!.size

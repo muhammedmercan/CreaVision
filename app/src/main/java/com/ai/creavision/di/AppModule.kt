@@ -1,6 +1,7 @@
 package com.ai.creavision.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.ai.creavision.R
 import com.ai.creavision.data.remote.Api
 import com.ai.creavision.data.repository.Repository
@@ -54,4 +55,10 @@ class AppModule {
             RequestOptions().placeholder(R.drawable.ic_launcher_foreground)
                 .error(R.drawable.ic_launcher_foreground)
         )
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("mainPreference", Context.MODE_PRIVATE)
+    }
 }

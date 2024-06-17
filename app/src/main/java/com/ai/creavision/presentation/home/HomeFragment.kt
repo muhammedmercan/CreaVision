@@ -11,8 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.adapty.Adapty
+import com.adapty.models.AdaptyConfig
+import com.adapty.utils.AdaptyResult
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentHomeBinding
 import com.ai.creavision.domain.model.ArtStyleBottomSheetModel
@@ -20,6 +24,7 @@ import com.ai.creavision.domain.model.ArtStyleBottomSheetModel.Companion.TAG
 import com.ai.creavision.domain.model.PremiumBottomSheetModel
 import com.ai.creavision.domain.model.Style
 import com.ai.creavision.utils.Constants
+import com.ai.creavision.utils.DataHolder
 import com.ai.creavision.utils.NetworkUtils
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -56,7 +61,6 @@ class HomeFragment @Inject constructor(
 
     private var isLoading = false
 
-    private var premium = true
 
 
 
@@ -97,6 +101,13 @@ class HomeFragment @Inject constructor(
         onClick()
         loadRewardedAd()
 
+        /*
+        if (!DataHolder.isPremium) {
+            findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+
+        }
+
+         */
 
 
         binding.recyclerViewHome.adapter = homeAdapter
@@ -126,8 +137,15 @@ class HomeFragment @Inject constructor(
     }
 
 
+
+
     private fun onClick() {
 
+        binding.btnPremium.setOnClickListener() {
+
+            findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+
+        }
 
         binding.btnSeeAll.setOnClickListener() {
 
@@ -144,20 +162,6 @@ class HomeFragment @Inject constructor(
             binding.editTextPrompt.setText(Constants.RANDOM_PROMPTS[random])
         }
 
-        binding.btnPremium.setOnClickListener() {
-
-
-            val fullScreenDialogFragment = FullScreenDialogFragment()
-            val transaction = parentFragmentManager.beginTransaction()
-            // For a polished look, specify a transition animation.
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            // To make it fullscreen, use the 'content' root view as the container
-            // for the fragment, which is always the root view for the activity.
-
-            findNavController().navigate(R.id.action_homeFragment_to_fullScreenDialogFragment)
-
-
-        }
 
         artStyleAdapter.setOnItemClickListener {
             binding.recyclerViewHome.adapter?.notifyDataSetChanged()
@@ -167,7 +171,7 @@ class HomeFragment @Inject constructor(
 
             if (checkInternetConnection()) {
 
-                if (!premium) {
+                if (!DataHolder.isPremium) {
 
                     if (rewardedAd != null) {
                         showRewardedAd()
@@ -256,6 +260,7 @@ class HomeFragment @Inject constructor(
                 // Set the ad reference to null so you don't show the ad a second time.
                 Log.d(TAG, "Ad dismissed fullscreen content.")
                 rewardedAd = null
+                loadRewardedAd()
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {

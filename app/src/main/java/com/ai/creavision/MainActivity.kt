@@ -6,11 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withStarted
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.ai.creavision.databinding.ActivityMainBinding
+import com.adapty.Adapty
+import com.adapty.models.AdaptyConfig
+import com.adapty.utils.AdaptyResult
 import com.ai.creavision.presentation.home.CreaVisionFragmentFactory
+import com.ai.creavision.utils.DataHolder
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -27,24 +28,94 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.fragmentFactory = fragmentFactory
         setContentView(R.layout.activity_main)
 
+        initPaywall()
+        checkPremium()
+
         var bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+
+
 
         val navController =
             Navigation.findNavController(this@MainActivity, R.id.fragmentContainerView)
         bottomNav.setupWithNavController(navController)
 
 
+
+
         // Hide bottom nav on screens which don't require it
         lifecycleScope.launch {
             withStarted {
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                when (destination.id) {
+                navController.addOnDestinationChangedListener { _, destination, _ ->
+                    when (destination.id) {
 
-                    R.id.homeFragment, R.id.allOldResultsFragment, R.id.fullScreenDialogFragment -> bottomNav.visibility =
-                        View.VISIBLE
+                        R.id.homeFragment, R.id.yourArtsFragment, R.id.fullScreenDialogFragment -> bottomNav.visibility =
+                            View.VISIBLE
 
-                    else -> bottomNav.visibility = View.GONE
+                        else -> bottomNav.visibility = View.GONE
+                    }
                 }
+            }
+        }
+    }
+
+    private fun checkPremium() {
+
+        Adapty.getProfile { result ->
+            when (result) {
+                is AdaptyResult.Success -> {
+                    val profile = result.value
+
+                    if (profile.accessLevels["premium"]?.isActive == true) {
+                        DataHolder.isPremium = true
+                        println("premium")
+                    }
+                }
+                is AdaptyResult.Error -> {
+                    val error = result.error
+                    // handle the error
+                }
+            }
+        }
+    }
+
+
+    private fun initPaywall() {
+
+        Adapty.activate(
+            applicationContext,
+            AdaptyConfig.Builder("public_live_ZurMY5sb.E9iUhWnMgf0fnzmiRQck")
+                .withObserverMode(false) //default false
+                .withIpAddressCollectionDisabled(false) //default false
+                .build()
+        )
+
+        println("brother")
+        Adapty.getPaywall("placementId") { paywallResult ->
+            when (paywallResult) {
+                is AdaptyResult.Success -> {
+                    val paywall = paywallResult.value
+                    Adapty.getPaywallProducts(paywall) { productResult ->
+
+                        when (productResult) {
+                            is AdaptyResult.Success -> {
+
+                                DataHolder.paywall = paywallResult.value
+
+                            }
+
+                            is AdaptyResult.Error -> {
+
+                                println(productResult.error.toString())
+
+                            }
+                        }
+                    }
+                }
+
+                is AdaptyResult.Error -> {
+                    println(paywallResult.error.toString())
+
                 }
             }
         }

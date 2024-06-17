@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.adapty.ui.AdaptyPaywallView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/black"
 
+    tools:context="FullScreenDialogFragment">
+
+    <com.adapty.ui.AdaptyPaywallView
+        android:id="@+id/adapty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </com.adapty.ui.AdaptyPaywallView>
+<!--
     <Button
         android:id="@+id/btnPayContinue"
         android:layout_width="0dp"
@@ -197,5 +210,6 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/textView3"
         app:srcCompat="@drawable/cancel_icon" />
+        -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.adapty.ui.AdaptyPaywallView>
