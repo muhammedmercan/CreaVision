@@ -80,7 +80,7 @@ class SingleYourArtFragment : BaseFragment() {
 
         Glide
             .with(this)
-            .load(imgFile)
+            .load(File(imgFile))
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
             .listener(object : RequestListener<Drawable> {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ai.creavision.presentation.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_paywallUiFragment"
+            app:destination="@id/paywallUiFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_allResultsFragment"
+            app:destination="@id/allResultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paywallUiFragment"
+        android:name="com.ai.creavision.PaywallUiFragment"
+        android:label="PaywallUiFragment" />
+    <fragment
+        android:id="@+id/allResultsFragment"
+        android:name="com.ai.creavision.presentation.results.AllResultsFragment"
+        android:label="fragment_all_results"
+        tools:layout="@layout/fragment_all_results" >
+        <action
+            android:id="@+id/action_allResultsFragment_to_singleResultFragment"
+            app:destination="@id/singleResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleResultFragment"
+        android:name="com.ai.creavision.presentation.results.SingleResultFragment"
+        android:label="SingleResultFragment" />
+
+</navigation>

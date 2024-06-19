@@ -162,7 +162,7 @@ class AllResultsFragment : Fragment() {
             val args = Bundle().apply {
                 putString("imgUrl", imageUrl)
             }
-            findNavController().navigate(R.id.action_createFragment_to_singleResultFragment, args)
+            findNavController().navigate(R.id.action_allResultsFragment_to_singleResultFragment, args)
         }
     }
 

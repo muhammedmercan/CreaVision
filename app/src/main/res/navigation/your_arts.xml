@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/your_arts"
+    app:startDestination="@id/yourArtsFragment">
+
+    <fragment
+        android:id="@+id/yourArtsFragment"
+        android:name="com.ai.creavision.presentation.your_arts.YourArtsFragment"
+        android:label="fragment_your_arts"
+        tools:layout="@layout/fragment_your_arts" >
+        <action
+            android:id="@+id/action_yourArtsFragment_to_singleYourArtFragment"
+            app:destination="@id/singleYourArtFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleYourArtFragment"
+        android:name="com.ai.creavision.presentation.results.SingleYourArtFragment"
+        android:label="SingleYourArtFragment" />
+</navigation>

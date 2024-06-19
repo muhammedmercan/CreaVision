@@ -5,7 +5,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withStarted
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.adapty.Adapty
 import com.adapty.models.AdaptyConfig
@@ -23,6 +30,11 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var fragmentFactory: CreaVisionFragmentFactory
 
+    private lateinit var navController: NavController
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.fragmentFactory = fragmentFactory
@@ -31,16 +43,20 @@ class MainActivity : AppCompatActivity() {
         initPaywall()
         checkPremium()
 
-        var bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.fragmentContainerView
+        ) as NavHostFragment
+        navController = navHostFragment.navController
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setupWithNavController(navController)
 
 
 
 
-        val navController =
-            Navigation.findNavController(this@MainActivity, R.id.fragmentContainerView)
-        bottomNav.setupWithNavController(navController)
-
-
+        //var bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation) as NavHostFragment
+        //val navController = Navigation.findNavController(this@MainActivity, R.id.fragmentContainerView)
+        //bottomNav.setupWithNavController(navController)
 
 
         // Hide bottom nav on screens which don't require it
@@ -49,14 +65,18 @@ class MainActivity : AppCompatActivity() {
                 navController.addOnDestinationChangedListener { _, destination, _ ->
                     when (destination.id) {
 
-                        R.id.homeFragment, R.id.yourArtsFragment, R.id.fullScreenDialogFragment -> bottomNav.visibility =
+                        R.id.homeFragment, R.id.yourArtsFragment -> bottomNavigationView.visibility =
                             View.VISIBLE
 
-                        else -> bottomNav.visibility = View.GONE
+                        else -> bottomNavigationView.visibility = View.GONE
                     }
                 }
             }
         }
+
+
+
+
     }
 
     private fun checkPremium() {

@@ -6,27 +6,15 @@ object DataModel {
     var imageFiles: List<File>? = emptyList()
 
     var deneme = listOf(
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg",
-        "https://t4.ftcdn.net/jpg/05/33/09/21/360_F_533092114_F445fdEhPjpeMfH5yo8eypW928WPH0IJ.jpg"
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0"),
+        File("/data/user/0/com.ai.creavision/cache/image_manager_disk_cache/e21c3311162b19710350a1ef167ab9d363bbce94792011102e18ee55fcf6aade.0")
     )
 }
 

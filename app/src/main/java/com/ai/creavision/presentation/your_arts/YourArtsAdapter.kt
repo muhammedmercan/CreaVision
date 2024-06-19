@@ -22,26 +22,24 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
     private var onItemClickListener : ((String) -> Unit)? = null
 
 
+    class ViewHolder(val binding: ItemArtBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private val diffUtil = object : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-            return oldItem == newItem
+
+    private val diffUtil = object : DiffUtil.ItemCallback<File>() {
+        override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
+            return oldItem.absolutePath == newItem.absolutePath
         }
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
             return oldItem == newItem
         }
     }
 
     private val recyclerListDiffer = AsyncListDiffer(this, diffUtil)
 
-    var photoFiles: List<String>?
+    var photoFiles: List<File>?
         get() = recyclerListDiffer.currentList
         set(value) = recyclerListDiffer.submitList(value)
 
-
-
-
-    class ViewHolder(val binding: ItemArtBinding) : RecyclerView.ViewHolder(binding.root)
 
 
 
@@ -59,11 +57,11 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
         println(photoFiles?.get(position))
 
 
-        Glide.with(holder.itemView.context)
+        Glide.with(holder.binding.imageView)
             .load(photoFiles?.get(position))
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .thumbnail(0.1f)
-            //.override(1024,1024)
+            //.override(500,500)
             //.encodeQuality(30)
             //.placeholder(R.drawable.ic_launcher_background)
             //.skipMemoryCache(true)
@@ -71,7 +69,7 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
 
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {
-                it(photoFiles?.get(position)!!)
+                it(photoFiles?.get(position)?.path!!)
             }
         }
 

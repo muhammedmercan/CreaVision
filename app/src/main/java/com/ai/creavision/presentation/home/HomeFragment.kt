@@ -216,7 +216,7 @@ class HomeFragment @Inject constructor(
         args.putString("negativePrompt", negativePrompt)
         args.putInt("width", width)
         args.putInt("height", height)
-        findNavController().navigate(R.id.action_homeFragment_to_createFragment,args)
+        findNavController().navigate(R.id.action_homeFragment_to_allResultsFragment,args)
 
     }
 

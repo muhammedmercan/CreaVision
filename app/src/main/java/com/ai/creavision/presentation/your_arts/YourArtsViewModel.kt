@@ -3,9 +3,12 @@ package com.ai.creavision.presentation.your_arts
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
@@ -29,13 +32,15 @@ class YourArtsViewModel @Inject constructor(
 
     fun getImages() {
 
+        viewModelScope.launch() {
+
         val photoCacheDir = Glide.getPhotoCacheDir(context)
         val list = photoCacheDir?.listFiles()?.toMutableList()
         list?.removeAt(0)
         DataModel.imageFiles = list
-        liveData.value = list
+        liveData.value = Glide.getPhotoCacheDir(context)?.listFiles()?.toMutableList()
 
-    }
+    }}
 
     fun reset() {
         liveData.value = null
