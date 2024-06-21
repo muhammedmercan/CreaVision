@@ -34,6 +34,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,9 +43,10 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-
-class SingleYourArtFragment : BaseFragment() {
+@AndroidEntryPoint
+class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
     private var _binding: FragmentSingleYourArtBinding? = null
     private val binding get() = _binding!!

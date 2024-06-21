@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ai.creavision.utils.DataHolder
 import com.bumptech.glide.Glide
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -33,12 +34,16 @@ class YourArtsViewModel @Inject constructor(
     fun getImages() {
 
         viewModelScope.launch() {
-
+/*
         val photoCacheDir = Glide.getPhotoCacheDir(context)
         val list = photoCacheDir?.listFiles()?.toMutableList()
         list?.removeAt(0)
         DataModel.imageFiles = list
         liveData.value = Glide.getPhotoCacheDir(context)?.listFiles()?.toMutableList()
+
+ */
+        //TODO burası düzeltilcek
+        liveData.value = DataModel.deneme
 
     }}
 

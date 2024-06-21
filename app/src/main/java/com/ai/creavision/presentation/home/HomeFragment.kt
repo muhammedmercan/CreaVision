@@ -44,8 +44,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment @Inject constructor(
-    val homeAdapter: HomeAdapter,
-    val artStyleAdapter: ArtStyleAdapter
+    private val homeAdapter: HomeAdapter,
+    private val artStyleAdapter: ArtStyleAdapter
 
 ): Fragment() {
 

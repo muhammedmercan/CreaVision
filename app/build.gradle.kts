@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.runtime.android)
     implementation(libs.play.services.analytics.impl)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -95,6 +97,9 @@ dependencies {
 
     implementation("io.adapty:android-sdk:2.11.2")
     implementation("io.adapty:android-ui:2.11.0")
+
+    //Picasso
+    implementation("com.squareup.picasso:picasso:2.8")
 
 
 

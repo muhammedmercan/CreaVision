@@ -1,6 +1,7 @@
 package com.ai.creavision.presentation.your_arts
 
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,11 +14,15 @@ import com.ai.creavision.R
 import com.ai.creavision.databinding.ItemArtBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.squareup.picasso.Picasso
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import javax.inject.Inject
 
 
-class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapter.ViewHolder>() {
+class YourArtsAdapter @Inject constructor(
+
+) : RecyclerView.Adapter<YourArtsAdapter.ViewHolder>() {
 
     private var onItemClickListener : ((String) -> Unit)? = null
 
@@ -56,16 +61,29 @@ class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapt
 
         println(photoFiles?.get(position))
 
+        //holder.binding.imageView.setImageResource(R.drawable.victorian)
 
+
+        Picasso.get().load(photoFiles?.get(position)!!).into(holder.binding.imageView);
+
+/*
         Glide.with(holder.binding.imageView)
-            .load(photoFiles?.get(position))
+            .load(R.drawable.ic_launcher_foreground)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .thumbnail(0.1f)
+            //.thumbnail(0.1f)
             //.override(500,500)
             //.encodeQuality(30)
             //.placeholder(R.drawable.ic_launcher_background)
             //.skipMemoryCache(true)
             .into(holder.binding.imageView)
+
+ */
+
+
+
+
+
+
 
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {

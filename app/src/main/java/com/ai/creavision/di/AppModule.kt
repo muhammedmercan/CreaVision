@@ -2,7 +2,9 @@ package com.ai.creavision.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.room.Room
 import com.ai.creavision.R
+import com.ai.creavision.data.local.Database
 import com.ai.creavision.data.remote.Api
 import com.ai.creavision.data.repository.Repository
 import com.ai.creavision.domain.repository.RepositoryInterface
@@ -24,6 +26,21 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
+
+    @Singleton
+    @Provides
+    fun injectRoomDatabase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(context, Database::class.java, "FavoriteDB").build()
+
+    @Singleton
+    @Provides
+    fun injectDao(
+        database: Database
+    ) = database.dao()
+
+
 
     private var okHttpClient: OkHttpClient = OkHttpClient().newBuilder()
         .connectTimeout(60, TimeUnit.SECONDS)
@@ -48,6 +65,7 @@ class AppModule {
     @Provides
     fun injectNormalRepo(api: Api) = Repository(api) as RepositoryInterface
 
+    /*
     @Singleton
     @Provides
     fun injectGlide(@ApplicationContext context: Context) = Glide
@@ -55,6 +73,8 @@ class AppModule {
             RequestOptions().placeholder(R.drawable.ic_launcher_foreground)
                 .error(R.drawable.ic_launcher_foreground)
         )
+
+     */
 
     @Provides
     @Singleton

@@ -66,10 +66,10 @@ class YourArtsFragment @Inject constructor(
         observeLiveData()
 
         viewModel.getImages()
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        binding.recyclerViewYourArts.layoutManager = layoutManager
         binding.recyclerViewYourArts.adapter = yourArtsAdapter
-        //val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        //layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        //binding.recyclerViewYourArts.layoutManager = layoutManager
 
 
     }
@@ -104,8 +104,8 @@ class YourArtsFragment @Inject constructor(
 
                         if (!imageResponse.isNullOrEmpty()) {
 
-                            //yourArtsAdapter.photoFiles = viewModel.liveData.value
-                            yourArtsAdapter.photoFiles = DataModel.deneme
+                            yourArtsAdapter.photoFiles = viewModel.liveData.value
+                            //yourArtsAdapter.photoFiles = DataModel.deneme
 
                         }
                     }
