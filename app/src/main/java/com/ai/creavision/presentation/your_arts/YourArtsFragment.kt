@@ -71,7 +71,6 @@ class YourArtsFragment @Inject constructor(
         binding.recyclerViewYourArts.layoutManager = layoutManager
         binding.recyclerViewYourArts.adapter = yourArtsAdapter
 
-
     }
 
     private fun onScroll() {
@@ -131,7 +130,7 @@ class YourArtsFragment @Inject constructor(
         yourArtsAdapter.setOnItemClickListener {
             viewModel.fromHome = false
             val args = Bundle()
-            args.putSerializable("imgFile", it!!)
+            args.putSerializable("favorite",it)
             findNavController().navigate(
                 R.id.action_yourArtsFragment_to_singleYourArtFragment,
                 args

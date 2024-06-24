@@ -15,9 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllResultsViewModel @Inject constructor(
-    private val repository: RepositoryInterface,
-    private val sharedPreferences: SharedPreferences
-
+    private val repository: RepositoryInterface
 ): ViewModel() {
 
     val liveData = MutableLiveData<ImageResponse?>()

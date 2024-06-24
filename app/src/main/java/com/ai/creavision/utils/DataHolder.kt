@@ -6,7 +6,7 @@ object DataHolder {
 
     var currentGlideCache : Boolean = false
 
-    lateinit var paywall : AdaptyPaywall
+    var paywall : AdaptyPaywall? = null
 
     var isPremium : Boolean = false
 }

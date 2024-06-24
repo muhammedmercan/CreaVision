@@ -35,7 +35,6 @@ class AllResultsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModel: AllResultsViewModel
 
-
     var prompt: String = ""
     var negativePrompt: String = ""
     var width: Int = 0
@@ -161,6 +160,7 @@ class AllResultsFragment : Fragment() {
         imageView.setOnClickListener {
             val args = Bundle().apply {
                 putString("imgUrl", imageUrl)
+                putString("prompt", prompt)
             }
             findNavController().navigate(R.id.action_allResultsFragment_to_singleResultFragment, args)
         }

@@ -1,32 +1,21 @@
 package com.ai.creavision.presentation.results
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.content.FileProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
-import com.ai.creavision.databinding.FragmentSingleResultBinding
 import com.ai.creavision.databinding.FragmentSingleYourArtBinding
+import com.ai.creavision.domain.model.Favorite
 import com.ai.creavision.presentation.BaseFragment
+import com.ai.creavision.presentation.your_arts.SingleYourArtViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -34,30 +23,28 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
+    private lateinit var viewModel: SingleYourArtViewModel
+
+
     private var _binding: FragmentSingleYourArtBinding? = null
     private val binding get() = _binding!!
     lateinit var bitmap: Bitmap
-    private var imgFile = ""
+    lateinit var favorite: Favorite
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments.let {
-            imgFile = it?.getString("imgFile").toString()
+            favorite = it?.getSerializable("favorite")!! as Favorite
+
         }
     }
 
@@ -73,38 +60,31 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(SingleYourArtViewModel::class.java)
+
 
         init()
         onClick()
+        observeLiveData()
     }
 
     private fun init() {
 
-        Glide
-            .with(this)
-            .load(File(imgFile))
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    TODO("Not yet implemented")
-                }
+        viewModel.isFavoriteExists(favorite.imgUrl)
 
-                override fun onResourceReady(
-                    resource: Drawable,
-                    model: Any,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource,
-                    isFirstResource: Boolean
-                ): Boolean {
 
-                    bitmap = (resource as BitmapDrawable).bitmap
+        //Picasso.get().load(favorite.imgUrl).into(binding.imageView);
+        //Picasso.get().load(favorite.imgUrl).into(binding.imageView);
 
+
+        Picasso.get()
+            .load(favorite.imgUrl)
+            //.skipMemoryCache() // Picasso'da doğrudan bellek önbelleğini atlama özelliği yok
+            .into(object : com.squareup.picasso.Target {
+                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                    // Resim yüklendiğinde yapılacak işlemler
+                    this@SingleYourArtFragment.bitmap = bitmap
+                    binding.imageView.setImageBitmap(bitmap)
                     binding.btnShare.isClickable = true
                     binding.btnShare.isEnabled = true
                     binding.btnDownload.isClickable = true
@@ -112,15 +92,63 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
                     binding.btnShare.alpha = 1F
                     binding.btnDownload.alpha = 1F
+                }
 
-                    return false
+                override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {
+                    // Resim yükleme başarısız olduğunda yapılacak işlemler
+                    // Örneğin, hata mesajı göstermek
+                    e.printStackTrace()
+                }
+
+                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                    // Resim yüklenmeden önce yapılacak işlemler
+                    // Örneğin, bir yükleniyor animasyonu göstermek
                 }
             })
-            .into(binding.imageView)
+
 
     }
 
+
+    private fun observeLiveData() {
+
+        viewModel.liveDataIsExists.observe(viewLifecycleOwner, Observer { imageResponse ->
+
+            if (imageResponse) {
+                binding.btnFavorite.setImageResource(R.drawable.favorite_icon_fill)
+
+            } else {
+                binding.btnFavorite.setImageResource(R.drawable.favorite_icon)
+
+            }
+        })
+
+        viewModel.liveDataAddResult.observe(viewLifecycleOwner, Observer { response ->
+
+            viewModel.isFavoriteExists(favorite.imgUrl)
+
+        })
+
+        viewModel.liveDataDeleteResult.observe(viewLifecycleOwner, Observer { response ->
+
+            viewModel.isFavoriteExists(favorite.imgUrl)
+        })
+    }
+
     private fun onClick() {
+
+        binding.btnFavorite.setOnClickListener() {
+
+            if (viewModel.liveDataIsExists.value!!) {
+                //binding.btnfavorite.setImageResource(R.drawable.favorite_icon)
+                viewModel.deleteFavorite(favorite.imgUrl)
+
+            } else {
+                viewModel.addFavorite(Favorite(favorite.imgUrl, favorite.prompt))
+                //binding.btnfavorite.setImageResource(R.drawable.favorite_icon_fill)
+
+            }
+        }
 
         binding.btnShare.setOnClickListener() {
             val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
@@ -131,7 +159,8 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
         binding.btnDownload.setOnClickListener() {
             permissionNotification()
             if (allPermissionsGranted) {
-                Snackbar.make(requireView(), R.string.image_downloading, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), R.string.image_downloading, Snackbar.LENGTH_SHORT)
+                    .show()
                 saveImage(bitmap)
             }
         }

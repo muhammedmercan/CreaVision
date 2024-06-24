@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.room.Room
 import com.ai.creavision.R
+import com.ai.creavision.data.local.Dao
 import com.ai.creavision.data.local.Database
 import com.ai.creavision.data.remote.Api
 import com.ai.creavision.data.repository.Repository
@@ -63,7 +64,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun injectNormalRepo(api: Api) = Repository(api) as RepositoryInterface
+    fun injectNormalRepo(api: Api, dao: Dao) = Repository(api, dao) as RepositoryInterface
 
     /*
     @Singleton

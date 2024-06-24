@@ -1,14 +1,17 @@
 package com.ai.creavision.domain.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 
 @Entity(tableName = "Favorites")
-data class Favorite(
+class Favorite(
 
+    val imgUrl: String,
+    val prompt: String,
+) : Serializable {
     @PrimaryKey(autoGenerate = true)
-    val id : Int = 0 ,
-    val string: String,
-    val prompt: String
-)
+    var id : Int = 0
+}

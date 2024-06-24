@@ -143,7 +143,11 @@ class HomeFragment @Inject constructor(
 
         binding.btnPremium.setOnClickListener() {
 
-            findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+            if (DataHolder.paywall != null) {
+                findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+
+            }
+
 
         }
 

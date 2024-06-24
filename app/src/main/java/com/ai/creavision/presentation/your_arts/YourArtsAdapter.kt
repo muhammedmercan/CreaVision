@@ -1,22 +1,14 @@
 package com.ai.creavision.presentation.your_arts
 
 
-import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.ai.creavision.R
 import com.ai.creavision.databinding.ItemArtBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.ai.creavision.domain.model.Favorite
 import com.squareup.picasso.Picasso
-import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.File
 import javax.inject.Inject
 
 
@@ -24,48 +16,43 @@ class YourArtsAdapter @Inject constructor(
 
 ) : RecyclerView.Adapter<YourArtsAdapter.ViewHolder>() {
 
-    private var onItemClickListener : ((String) -> Unit)? = null
+    private var onItemClickListener : ((Favorite) -> Unit)? = null
 
 
     class ViewHolder(val binding: ItemArtBinding) : RecyclerView.ViewHolder(binding.root)
 
 
-    private val diffUtil = object : DiffUtil.ItemCallback<File>() {
-        override fun areItemsTheSame(oldItem: File, newItem: File): Boolean {
-            return oldItem.absolutePath == newItem.absolutePath
+    private val diffUtil = object : DiffUtil.ItemCallback<Favorite>() {
+        override fun areItemsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
+            return oldItem.id == newItem.id
         }
-        override fun areContentsTheSame(oldItem: File, newItem: File): Boolean {
-            return oldItem == newItem
+        override fun areContentsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
+            return oldItem.imgUrl == newItem.imgUrl
         }
     }
 
     private val recyclerListDiffer = AsyncListDiffer(this, diffUtil)
 
-    var photoFiles: List<File>?
+    var photoFiles: List<Favorite>?
         get() = recyclerListDiffer.currentList
         set(value) = recyclerListDiffer.submitList(value)
-
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemArtBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
 
-    fun setOnItemClickListener(listener : (String) -> Unit) {
+    fun setOnItemClickListener(listener : (Favorite) -> Unit) {
         onItemClickListener = listener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        println(photoFiles?.get(position))
+        println(photoFiles?.get(position)?.imgUrl)
 
         //holder.binding.imageView.setImageResource(R.drawable.victorian)
 
-
-        Picasso.get().load(photoFiles?.get(position)!!).into(holder.binding.imageView);
-
+        Picasso.get().load(photoFiles?.get(position)?.imgUrl!!).into(holder.binding.imageView);
 /*
         Glide.with(holder.binding.imageView)
             .load(R.drawable.ic_launcher_foreground)
@@ -78,21 +65,14 @@ class YourArtsAdapter @Inject constructor(
             .into(holder.binding.imageView)
 
  */
-
-
-
-
-
-
-
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {
-                it(photoFiles?.get(position)?.path!!)
+                it(Favorite(photoFiles?.get(position)?.imgUrl!!, photoFiles?.get(position)?.prompt!!))
+                //it(photoFiles?.get(position)?.imgUrl!!)
+                //it(photoFiles?.get(position)?.imgUrl!!)
             }
         }
-
     }
-
 
     override fun getItemCount(): Int {
         return photoFiles!!.size

@@ -1,51 +1,37 @@
 package com.ai.creavision.presentation.results
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentSingleResultBinding
+import com.ai.creavision.domain.model.Favorite
 import com.ai.creavision.presentation.BaseFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
 
-class SingleResultFragment : BaseFragment() {
+class SingleResultFragment @Inject constructor() : BaseFragment() {
+
+    private lateinit var viewModel: SingleResultViewModel
 
     private var _binding: FragmentSingleResultBinding? = null
     private val binding get() = _binding!!
     private var imgUrl = ""
+    private var prompt = ""
     lateinit var bitmap: Bitmap
 
 
@@ -54,6 +40,7 @@ class SingleResultFragment : BaseFragment() {
 
         arguments.let {
             imgUrl = it?.getString("imgUrl").toString()
+            prompt = it?.getString("prompt").toString()
         }
     }
 
@@ -64,57 +51,105 @@ class SingleResultFragment : BaseFragment() {
         // Inflate the layout for this fragment
         _binding = FragmentSingleResultBinding.inflate(inflater, container, false)
         val view = binding.root
-        return view        }
+        return view
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(SingleResultViewModel::class.java)
 
         init()
         onClick()
-        }
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+
+        viewModel.liveDataIsExists.observe(viewLifecycleOwner, Observer { imageResponse ->
+
+            if (imageResponse) {
+                binding.btnFavorite.setImageResource(R.drawable.favorite_icon_fill)
+
+            } else {
+                binding.btnFavorite.setImageResource(R.drawable.favorite_icon)
+
+            }
+        })
+
+        viewModel.liveDataAddResult.observe(viewLifecycleOwner, Observer { response ->
+
+            viewModel.isFavoriteExists(imgUrl)
+
+        })
+
+        viewModel.liveDataDeleteResult.observe(viewLifecycleOwner, Observer { response ->
+
+            viewModel.isFavoriteExists(imgUrl)
+        })
+    }
 
     private fun init() {
 
-            Glide
-                .with(this)
-                .load(imgUrl)
-                //.override(500,500)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        TODO("Not yet implemented")
-                    }
+        viewModel.isFavoriteExists(imgUrl)
 
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
+        /*
+                if (viewModel.isFavoriteExists(imgUrl)) {
+                    binding.btnfavorite.setImageResource(R.drawable.favorite_icon_fill)
+                }
+         */
 
-                        bitmap = (resource as BitmapDrawable).bitmap
+        Glide
+            .with(this)
+            .load(imgUrl)
+            //.override(500,500)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    TODO("Not yet implemented")
+                }
 
-                        binding.btnShare.isClickable = true
-                        binding.btnShare.isEnabled = true
-                        binding.btnDownload.isClickable = true
-                        binding.btnDownload.isEnabled = true
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
 
-                        binding.btnShare.alpha = 1F
-                        binding.btnDownload.alpha = 1F
+                    bitmap = (resource as BitmapDrawable).bitmap
 
-                        return false
-                    }
-                })
-                .into(binding.imageView)
+                    binding.btnShare.isClickable = true
+                    binding.btnShare.isEnabled = true
+                    binding.btnDownload.isClickable = true
+                    binding.btnDownload.isEnabled = true
+
+                    binding.btnShare.alpha = 1F
+                    binding.btnDownload.alpha = 1F
+
+                    return false
+                }
+            })
+            .into(binding.imageView)
     }
 
-
     private fun onClick() {
+
+        binding.btnFavorite.setOnClickListener() {
+
+            if (viewModel.liveDataIsExists.value!!) {
+                //binding.btnfavorite.setImageResource(R.drawable.favorite_icon)
+                viewModel.deleteFavorite(imgUrl)
+
+            } else {
+                viewModel.addFavorite(Favorite(imgUrl, prompt))
+                //binding.btnfavorite.setImageResource(R.drawable.favorite_icon_fill)
+
+            }
+        }
 
         binding.btnShare.setOnClickListener() {
             val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
@@ -125,7 +160,8 @@ class SingleResultFragment : BaseFragment() {
         binding.btnDownload.setOnClickListener() {
             permissionNotification()
             if (allPermissionsGranted) {
-                Snackbar.make(requireView(), R.string.image_downloading, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), R.string.image_downloading, Snackbar.LENGTH_SHORT)
+                    .show()
                 saveImage(bitmap)
             }
         }

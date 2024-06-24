@@ -56,8 +56,7 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
          * call `paywallView.showPaywall(paywall, products, viewConfig, AdaptyPaywallInsets.NONE)`
          */
 
-
-        AdaptyUI.getViewConfiguration(DataHolder.paywall) { result ->
+        AdaptyUI.getViewConfiguration(DataHolder.paywall!!) { result ->
             when (result) {
                 is AdaptyResult.Success -> {
                     val viewConfiguration = result.value

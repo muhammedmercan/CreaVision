@@ -3,6 +3,7 @@ package com.ai.creavision
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withStarted
 import androidx.navigation.NavController
@@ -32,13 +33,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         supportFragmentManager.fragmentFactory = fragmentFactory
         setContentView(R.layout.activity_main)
+
 
         initPaywall()
         checkPremium()
@@ -50,13 +50,6 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setupWithNavController(navController)
-
-
-
-
-        //var bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation) as NavHostFragment
-        //val navController = Navigation.findNavController(this@MainActivity, R.id.fragmentContainerView)
-        //bottomNav.setupWithNavController(navController)
 
 
         // Hide bottom nav on screens which don't require it
@@ -73,10 +66,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
-
     }
 
     private fun checkPremium() {
