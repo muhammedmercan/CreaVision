@@ -8,6 +8,7 @@ import com.ai.creavision.domain.repository.RepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,33 +29,34 @@ class SingleYourArtViewModel @Inject constructor(
         viewModelScope.launch(handler) {
             val response = repository.addFavorite(favorite)
             liveDataAddResult.value = response
-
         }
     }
 
-    fun deleteFavorite(imgUrl: String) {
+    fun deleteFavorite(imgPath: String) {
+
+
 
         val handler = CoroutineExceptionHandler {context, throwable ->
             println(throwable)
         }
 
         viewModelScope.launch(handler) {
+            val file = File(imgPath)
+            file.delete()
 
-            val response  = repository.deleteFavorite(imgUrl)
+            val response  = repository.deleteFavorite(imgPath)
             liveDataDeleteResult.value = response
         }
     }
 
-    fun isFavoriteExists(imgUrl: String) {
-
+    fun isFavoriteExists(imgPath: String) {
         var response = false
         val handler = CoroutineExceptionHandler {context, throwable ->
             println(throwable)
         }
 
         viewModelScope.launch(handler) {
-
-            val response  = repository.isFavoriteExists(imgUrl)
+            val response  = repository.isFavoriteExists(imgPath)
             liveDataIsExists.value = response
         }
     }

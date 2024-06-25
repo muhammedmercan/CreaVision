@@ -89,9 +89,6 @@ class AllResultsFragment : Fragment() {
 
         viewModel.liveData.observe(viewLifecycleOwner, Observer { imageResponse ->
 
-            Toast.makeText(requireContext(), "Geldi", Toast.LENGTH_LONG)
-                .show()
-
             imageResponse?.let {
 
                 if (!imageResponse.error.isNullOrEmpty()) {

@@ -1,6 +1,8 @@
 package com.ai.creavision.presentation.your_arts
 
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ai.creavision.databinding.ItemArtBinding
 import com.ai.creavision.domain.model.Favorite
 import com.squareup.picasso.Picasso
+import java.io.File
 import javax.inject.Inject
 
 
@@ -52,22 +55,21 @@ class YourArtsAdapter @Inject constructor(
 
         //holder.binding.imageView.setImageResource(R.drawable.victorian)
 
-        Picasso.get().load(photoFiles?.get(position)?.imgUrl!!).into(holder.binding.imageView);
-/*
-        Glide.with(holder.binding.imageView)
-            .load(R.drawable.ic_launcher_foreground)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            //.thumbnail(0.1f)
-            //.override(500,500)
-            //.encodeQuality(30)
-            //.placeholder(R.drawable.ic_launcher_background)
-            //.skipMemoryCache(true)
-            .into(holder.binding.imageView)
+        var bitmap: Bitmap? = null
 
- */
+        try {
+            val file = File(photoFiles?.get(position)?.imgPath)
+            bitmap = BitmapFactory.decodeFile(file.absolutePath)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+
+        holder.binding.imageView.setImageBitmap(bitmap)
+
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {
-                it(Favorite(photoFiles?.get(position)?.imgUrl!!, photoFiles?.get(position)?.prompt!!))
+                it(Favorite( imgPath = photoFiles?.get(position)?.imgPath!!, prompt =  photoFiles?.get(position)?.prompt!!))
                 //it(photoFiles?.get(position)?.imgUrl!!)
                 //it(photoFiles?.get(position)?.imgUrl!!)
             }

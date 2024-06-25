@@ -37,12 +37,9 @@ class YourArtsFragment @Inject constructor(
 
 ) : Fragment() {
 
-
     private var _binding: FragmentYourArtsBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var viewModel: YourArtsViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +57,6 @@ class YourArtsFragment @Inject constructor(
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(YourArtsViewModel::class.java)
 
-
         onClick()
         //onScroll()
         observeLiveData()
@@ -70,7 +66,6 @@ class YourArtsFragment @Inject constructor(
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         binding.recyclerViewYourArts.layoutManager = layoutManager
         binding.recyclerViewYourArts.adapter = yourArtsAdapter
-
     }
 
     private fun onScroll() {
@@ -96,22 +91,14 @@ class YourArtsFragment @Inject constructor(
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.liveData.observe(viewLifecycleOwner, Observer { imageResponse ->
 
-                    Toast.makeText(requireContext(), "Geldi", Toast.LENGTH_LONG)
-                        .show()
-
                     imageResponse?.let {
-
                         if (!imageResponse.isNullOrEmpty()) {
-
                             yourArtsAdapter.photoFiles = viewModel.liveData.value
-                            //yourArtsAdapter.photoFiles = DataModel.deneme
-
                         }
                     }
                 }
                 )
             }
-
         }
     }
 
@@ -120,10 +107,6 @@ class YourArtsFragment @Inject constructor(
         super.onDestroy()
         viewModel.fromHome = true
     }
-
-
-
-
 
     private fun onClick() {
 

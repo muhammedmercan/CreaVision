@@ -194,6 +194,44 @@ open class BaseFragment : Fragment() {
         return savedImagePath
     }
 
+    fun saveImageToInternalStorage(image: Bitmap): String? {
+
+        var savedImagePath: String? = null
+
+        val dateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")
+        val formattedDateTime = dateTime.format(formatter)
+
+        val imageFileName = "CreaVision_$formattedDateTime.jpg"
+        val storageDir = File(context?.filesDir,"favorites")
+
+        var success = true
+        if (!storageDir.exists()) {
+            success = storageDir.mkdirs()
+        }
+        if (success) {
+            val imageFile = File(storageDir, imageFileName)
+            savedImagePath = imageFile.absolutePath
+            try {
+                val fOut: OutputStream = FileOutputStream(imageFile)
+                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut)
+                fOut.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            // Add the image to the system gallery
+            //galleryAddPic(savedImagePath)
+
+            CoroutineScope(Dispatchers.Main).launch {
+                Snackbar.make(requireView(), R.string.image_saved, Snackbar.LENGTH_SHORT).show()
+            }
+        } else {
+            Snackbar.make(requireView(), R.string.image_could_not_be_downloaded, Snackbar.LENGTH_SHORT).show()
+        }
+        return savedImagePath
+    }
+
     private fun galleryAddPic(imagePath: String?) {
         imagePath?.let { path ->
             val mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)

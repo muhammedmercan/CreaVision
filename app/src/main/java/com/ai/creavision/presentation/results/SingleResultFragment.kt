@@ -21,6 +21,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
+import java.io.File
 import javax.inject.Inject
 
 
@@ -33,6 +34,7 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
     private var imgUrl = ""
     private var prompt = ""
     lateinit var bitmap: Bitmap
+    var savedImagePath = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,19 +80,19 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
 
         viewModel.liveDataAddResult.observe(viewLifecycleOwner, Observer { response ->
 
-            viewModel.isFavoriteExists(imgUrl)
+            viewModel.isFavoriteExistsWithUrl(imgUrl)
 
         })
 
         viewModel.liveDataDeleteResult.observe(viewLifecycleOwner, Observer { response ->
 
-            viewModel.isFavoriteExists(imgUrl)
+            viewModel.isFavoriteExistsWithUrl(imgUrl)
         })
     }
 
     private fun init() {
 
-        viewModel.isFavoriteExists(imgUrl)
+        viewModel.isFavoriteExistsWithUrl(imgUrl)
 
         /*
                 if (viewModel.isFavoriteExists(imgUrl)) {
@@ -142,10 +144,12 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
 
             if (viewModel.liveDataIsExists.value!!) {
                 //binding.btnfavorite.setImageResource(R.drawable.favorite_icon)
-                viewModel.deleteFavorite(imgUrl)
+
+                viewModel.deleteProductWithUrl(imgUrl)
 
             } else {
-                viewModel.addFavorite(Favorite(imgUrl, prompt))
+                savedImagePath = saveImageToInternalStorage(bitmap)!!
+                viewModel.addFavorite(Favorite(imgUrl = imgUrl , imgPath = savedImagePath, prompt =  prompt))
                 //binding.btnfavorite.setImageResource(R.drawable.favorite_icon_fill)
 
             }

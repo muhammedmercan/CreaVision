@@ -8,6 +8,7 @@ import com.ai.creavision.domain.repository.RepositoryInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,16 +46,46 @@ class SingleResultViewModel @Inject constructor(
         }
     }
 
-    fun isFavoriteExists(imgUrl: String) {
+    fun deleteProductWithUrl(imgUrl: String) {
 
-        var response = false
+
+
         val handler = CoroutineExceptionHandler {context, throwable ->
             println(throwable)
         }
 
         viewModelScope.launch(handler) {
 
-            val response  = repository.isFavoriteExists(imgUrl)
+            val file = File(repository.getImgPathWithUrl(imgUrl))
+            file.delete()
+
+            val response  = repository.deleteProductWithUrl(imgUrl)
+            liveDataDeleteResult.value = response
+        }
+    }
+
+    fun isFavoriteExists(imgPath: String) {
+
+        val handler = CoroutineExceptionHandler {context, throwable ->
+            println(throwable)
+        }
+
+        viewModelScope.launch(handler) {
+
+            val response  = repository.isFavoriteExists(imgPath)
+            liveDataIsExists.value = response
+        }
+    }
+
+    fun isFavoriteExistsWithUrl(imgUrl: String) {
+
+        val handler = CoroutineExceptionHandler {context, throwable ->
+            println(throwable)
+        }
+
+        viewModelScope.launch(handler) {
+
+            val response  = repository.isFavoriteExistsWithUrl(imgUrl)
             liveDataIsExists.value = response
         }
     }

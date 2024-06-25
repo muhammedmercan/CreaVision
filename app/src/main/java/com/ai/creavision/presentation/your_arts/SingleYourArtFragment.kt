@@ -1,6 +1,7 @@
 package com.ai.creavision.presentation.results
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -26,14 +27,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
+import java.net.URL
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
     private lateinit var viewModel: SingleYourArtViewModel
-
-
     private var _binding: FragmentSingleYourArtBinding? = null
     private val binding get() = _binding!!
     lateinit var bitmap: Bitmap
@@ -44,7 +44,6 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
         arguments.let {
             favorite = it?.getSerializable("favorite")!! as Favorite
-
         }
     }
 
@@ -62,7 +61,6 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(SingleYourArtViewModel::class.java)
 
-
         init()
         onClick()
         observeLiveData()
@@ -70,45 +68,26 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
     private fun init() {
 
-        viewModel.isFavoriteExists(favorite.imgUrl)
+        viewModel.isFavoriteExists(favorite.imgPath)
+        var bitmap: Bitmap? = null
 
+        try {
+            val file = File(favorite.imgPath)
+            bitmap = BitmapFactory.decodeFile(file.absolutePath)
+            binding.imageView.setImageBitmap(bitmap)
+            binding.btnShare.isClickable = true
+            binding.btnShare.isEnabled = true
+            binding.btnDownload.isClickable = true
+            binding.btnDownload.isEnabled = true
 
-        //Picasso.get().load(favorite.imgUrl).into(binding.imageView);
-        //Picasso.get().load(favorite.imgUrl).into(binding.imageView);
+            binding.btnShare.alpha = 1F
+            binding.btnDownload.alpha = 1F
 
-
-        Picasso.get()
-            .load(favorite.imgUrl)
-            //.skipMemoryCache() // Picasso'da doğrudan bellek önbelleğini atlama özelliği yok
-            .into(object : com.squareup.picasso.Target {
-                override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                    // Resim yüklendiğinde yapılacak işlemler
-                    this@SingleYourArtFragment.bitmap = bitmap
-                    binding.imageView.setImageBitmap(bitmap)
-                    binding.btnShare.isClickable = true
-                    binding.btnShare.isEnabled = true
-                    binding.btnDownload.isClickable = true
-                    binding.btnDownload.isEnabled = true
-
-                    binding.btnShare.alpha = 1F
-                    binding.btnDownload.alpha = 1F
-                }
-
-                override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {
-                    // Resim yükleme başarısız olduğunda yapılacak işlemler
-                    // Örneğin, hata mesajı göstermek
-                    e.printStackTrace()
-                }
-
-                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                    // Resim yüklenmeden önce yapılacak işlemler
-                    // Örneğin, bir yükleniyor animasyonu göstermek
-                }
-            })
-
-
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
-
 
     private fun observeLiveData() {
 
@@ -116,22 +95,20 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
             if (imageResponse) {
                 binding.btnFavorite.setImageResource(R.drawable.favorite_icon_fill)
-
             } else {
                 binding.btnFavorite.setImageResource(R.drawable.favorite_icon)
-
             }
         })
 
         viewModel.liveDataAddResult.observe(viewLifecycleOwner, Observer { response ->
 
-            viewModel.isFavoriteExists(favorite.imgUrl)
+            viewModel.isFavoriteExists(favorite.imgPath)
 
         })
 
         viewModel.liveDataDeleteResult.observe(viewLifecycleOwner, Observer { response ->
 
-            viewModel.isFavoriteExists(favorite.imgUrl)
+            viewModel.isFavoriteExists(favorite.imgPath)
         })
     }
 
@@ -141,12 +118,12 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
             if (viewModel.liveDataIsExists.value!!) {
                 //binding.btnfavorite.setImageResource(R.drawable.favorite_icon)
-                viewModel.deleteFavorite(favorite.imgUrl)
+
+                viewModel.deleteFavorite(favorite.imgPath)
 
             } else {
-                viewModel.addFavorite(Favorite(favorite.imgUrl, favorite.prompt))
+                viewModel.addFavorite(Favorite(favorite.imgPath, favorite.prompt))
                 //binding.btnfavorite.setImageResource(R.drawable.favorite_icon_fill)
-
             }
         }
 
@@ -164,7 +141,6 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
                 saveImage(bitmap)
             }
         }
-
         binding.btnBack.setOnClickListener() {
             findNavController().popBackStack()
         }

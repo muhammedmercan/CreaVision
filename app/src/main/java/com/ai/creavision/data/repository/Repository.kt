@@ -31,11 +31,23 @@ class Repository @Inject constructor(
         return dao.addFavorite(favorite)
     }
 
-    override suspend fun deleteFavorite(imgUrl: String): Int {
-        return dao.deleteProduct(imgUrl)
+    override suspend fun deleteFavorite(imgPath: String): Int {
+        return dao.deleteProduct(imgPath)
     }
 
-    override suspend fun isFavoriteExists(imgUrl: String): Boolean {
-        return dao.isFavoriteExists(imgUrl)
+    override suspend fun deleteProductWithUrl(imgUrl: String): Int {
+        return dao.deleteProductWithUrl(imgUrl)
+    }
+
+    override suspend fun isFavoriteExists(imgPath: String): Boolean {
+        return dao.isFavoriteExists(imgPath)
+    }
+
+    override suspend fun isFavoriteExistsWithUrl(imgUrl: String): Boolean {
+        return dao.isFavoriteExistsWithUrl(imgUrl)
+    }
+
+    override suspend fun getImgPathWithUrl(imgUrl: String): String {
+        return dao.getImgPathWithUrl(imgUrl)
     }
 }
