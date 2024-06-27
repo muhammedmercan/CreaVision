@@ -9,4 +9,11 @@ data class ImageResponse(
     val imageUrl: List<String>,
     val status: String,
     val error: String
-)
+) {
+
+    fun getItemCount(): Int {
+        return imageUrl.size
+    }
+
+
+}

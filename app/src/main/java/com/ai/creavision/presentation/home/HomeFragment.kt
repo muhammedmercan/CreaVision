@@ -1,7 +1,5 @@
 package com.ai.creavision.presentation.home
 
-import FullScreenDialogFragment
-import android.Manifest
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,17 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.adapty.Adapty
-import com.adapty.models.AdaptyConfig
-import com.adapty.utils.AdaptyResult
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentHomeBinding
 import com.ai.creavision.domain.model.ArtStyleBottomSheetModel
-import com.ai.creavision.domain.model.ArtStyleBottomSheetModel.Companion.TAG
 import com.ai.creavision.domain.model.PremiumBottomSheetModel
 import com.ai.creavision.domain.model.Style
 import com.ai.creavision.utils.Constants
@@ -30,12 +21,9 @@ import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardItem
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +35,7 @@ class HomeFragment @Inject constructor(
     private val homeAdapter: HomeAdapter,
     private val artStyleAdapter: ArtStyleAdapter
 
-): Fragment() {
+) : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -55,14 +43,10 @@ class HomeFragment @Inject constructor(
     private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(artStyleAdapter)
     private val premiumModalBottomSheet = PremiumBottomSheetModel()
 
-
     private var rewardedAd: RewardedAd? = null
     private final var TAG = "MainActivity"
 
     private var isLoading = false
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +57,6 @@ class HomeFragment @Inject constructor(
         val view = binding.root
         return view
     }
-
 
     private fun checkInternetConnection(): Boolean {
 
@@ -101,17 +84,7 @@ class HomeFragment @Inject constructor(
         onClick()
         loadRewardedAd()
 
-        /*
-        if (!DataHolder.isPremium) {
-            findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
-
-        }
-
-         */
-
-
         binding.recyclerViewHome.adapter = homeAdapter
-
         homeAdapter.artyStyleResponseList = Constants.ART_STYLES
 
         binding.editTextPrompt.addTextChangedListener(object : TextWatcher {
@@ -136,19 +109,21 @@ class HomeFragment @Inject constructor(
         })
     }
 
-
-
-
     private fun onClick() {
 
         binding.btnPremium.setOnClickListener() {
 
-            if (DataHolder.paywall != null) {
+            if (DataHolder.paywall != null || !DataHolder.isPremium) {
+                println(DataHolder.paywall)
+                println(DataHolder.isPremium)
+                findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+            }
+
+            else{
+                //findNavController().navigate(R.id.action_homeFragment_to_alreadyPremiumFragment)
                 findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
 
             }
-
-
         }
 
         binding.btnSeeAll.setOnClickListener() {
@@ -166,17 +141,13 @@ class HomeFragment @Inject constructor(
             binding.editTextPrompt.setText(Constants.RANDOM_PROMPTS[random])
         }
 
-
         artStyleAdapter.setOnItemClickListener {
             binding.recyclerViewHome.adapter?.notifyDataSetChanged()
         }
 
         binding.btnGenerate.setOnClickListener() {
-
             if (checkInternetConnection()) {
-
                 if (!DataHolder.isPremium) {
-
                     if (rewardedAd != null) {
                         showRewardedAd()
                     } else {
@@ -186,23 +157,42 @@ class HomeFragment @Inject constructor(
                     goCreate()
                 }
             }
-
-            }
         }
+    }
 
     private fun goCreate() {
 
         var width = 1024
         var height = 1024
 
-        when(binding.chipGroupAspectRatio.checkedChipId) {
-            binding.chip11.id -> {width = 1024; height = 1024 }
-            binding.chip916.id -> {width = 768; height = 1360 }
-            binding.chip169.id -> {width = 1360; height = 768 }
-            binding.chip43.id -> {width = 1152; height = 864 }
-            binding.chip34.id -> {width = 864; height = 1152 }
-            binding.chip23.id -> {width = 768; height = 1152 }
-            binding.chip32.id -> {width = 1152; height = 768 }
+        when (binding.chipGroupAspectRatio.checkedChipId) {
+            binding.chip11.id -> {
+                width = 1024; height = 1024
+            }
+
+            binding.chip916.id -> {
+                width = 768; height = 1360
+            }
+
+            binding.chip169.id -> {
+                width = 1360; height = 768
+            }
+
+            binding.chip43.id -> {
+                width = 1152; height = 864
+            }
+
+            binding.chip34.id -> {
+                width = 864; height = 1152
+            }
+
+            binding.chip23.id -> {
+                width = 768; height = 1152
+            }
+
+            binding.chip32.id -> {
+                width = 1152; height = 768
+            }
         }
 
         var prompt = binding.editTextPrompt.text.toString()
@@ -220,7 +210,7 @@ class HomeFragment @Inject constructor(
         args.putString("negativePrompt", negativePrompt)
         args.putInt("width", width)
         args.putInt("height", height)
-        findNavController().navigate(R.id.action_homeFragment_to_allResultsFragment,args)
+        findNavController().navigate(R.id.action_homeFragment_to_allResultsFragment, args)
 
     }
 
@@ -253,7 +243,7 @@ class HomeFragment @Inject constructor(
 
     private fun showRewardedAd() {
 
-        rewardedAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+        rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdClicked() {
                 // Called when a click is recorded for an ad.
                 Log.d(TAG, "Ad was clicked.")
@@ -298,4 +288,4 @@ class HomeFragment @Inject constructor(
         rewardedAd = null
         isLoading = false
     }
-    }
+}

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+ <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home"
     app:startDestination="@id/homeFragment">
 
-    <fragment
+     <fragment
         android:id="@+id/homeFragment"
         android:name="com.ai.creavision.presentation.home.HomeFragment"
         android:label="fragment_home"
@@ -16,10 +16,13 @@
         <action
             android:id="@+id/action_homeFragment_to_allResultsFragment"
             app:destination="@id/allResultsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_alreadyPremiumFragment"
+            app:destination="@id/alreadyPremiumFragment" />
     </fragment>
     <fragment
         android:id="@+id/paywallUiFragment"
-        android:name="com.ai.creavision.PaywallUiFragment"
+        android:name="com.ai.creavision.presentation.premium.PaywallUiFragment"
         android:label="PaywallUiFragment" />
     <fragment
         android:id="@+id/allResultsFragment"
@@ -29,10 +32,18 @@
         <action
             android:id="@+id/action_allResultsFragment_to_singleResultFragment"
             app:destination="@id/singleResultFragment" />
+        <action
+            android:id="@+id/action_allResultsFragment_to_paywallUiFragment"
+            app:destination="@id/paywallUiFragment" />
     </fragment>
     <fragment
         android:id="@+id/singleResultFragment"
         android:name="com.ai.creavision.presentation.results.SingleResultFragment"
         android:label="SingleResultFragment" />
+    <fragment
+        android:id="@+id/alreadyPremiumFragment"
+        android:name="com.ai.creavision.presentation.premium.AlreadyPremiumFragment"
+        android:label="fragment_already_premium"
+        tools:layout="@layout/fragment_already_premium" />
 
 </navigation>

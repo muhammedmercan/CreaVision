@@ -1,6 +1,7 @@
 package com.ai.creavision
 
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,16 +31,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         supportFragmentManager.fragmentFactory = fragmentFactory
         setContentView(R.layout.activity_main)
 
-
-
-        initPaywall()
         checkPremium()
 
         val navHostFragment = supportFragmentManager.findFragmentById(
@@ -49,7 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setupWithNavController(navController)
-
 
         // Hide bottom nav on screens which don't require it
         lifecycleScope.launch {
@@ -67,8 +63,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun checkPremium() {
+
+        Adapty.activate(
+            applicationContext,
+            AdaptyConfig.Builder("public_live_ZurMY5sb.E9iUhWnMgf0fnzmiRQck")
+                .withObserverMode(false) //default false
+                .withIpAddressCollectionDisabled(false) //default false
+                .build()
+        )
 
         Adapty.getProfile { result ->
             when (result) {
@@ -78,6 +81,9 @@ class MainActivity : AppCompatActivity() {
                     if (profile.accessLevels["premium"]?.isActive == true) {
                         DataHolder.isPremium = true
                         println("premium")
+                        initPaywall()
+                    } else {
+                        initPaywall()
                     }
                 }
 
@@ -91,16 +97,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initPaywall() {
-
-        Adapty.activate(
-            applicationContext,
-            AdaptyConfig.Builder("public_live_ZurMY5sb.E9iUhWnMgf0fnzmiRQck")
-                .withObserverMode(false) //default false
-                .withIpAddressCollectionDisabled(false) //default false
-                .build()
-        )
-
-        println("brother")
         Adapty.getPaywall("placementId") { paywallResult ->
             when (paywallResult) {
                 is AdaptyResult.Success -> {
@@ -109,15 +105,11 @@ class MainActivity : AppCompatActivity() {
 
                         when (productResult) {
                             is AdaptyResult.Success -> {
-
                                 DataHolder.paywall = paywallResult.value
-
                             }
 
                             is AdaptyResult.Error -> {
-
                                 println(productResult.error.toString())
-
                             }
                         }
                     }
@@ -125,7 +117,6 @@ class MainActivity : AppCompatActivity() {
 
                 is AdaptyResult.Error -> {
                     println(paywallResult.error.toString())
-
                 }
             }
         }

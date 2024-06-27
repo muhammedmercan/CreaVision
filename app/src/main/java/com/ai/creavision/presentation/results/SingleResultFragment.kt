@@ -65,31 +65,6 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
         observeLiveData()
     }
 
-    private fun observeLiveData() {
-
-        viewModel.liveDataIsExists.observe(viewLifecycleOwner, Observer { imageResponse ->
-
-            if (imageResponse) {
-                binding.btnFavorite.setImageResource(R.drawable.favorite_icon_fill)
-
-            } else {
-                binding.btnFavorite.setImageResource(R.drawable.favorite_icon)
-
-            }
-        })
-
-        viewModel.liveDataAddResult.observe(viewLifecycleOwner, Observer { response ->
-
-            viewModel.isFavoriteExistsWithUrl(imgUrl)
-
-        })
-
-        viewModel.liveDataDeleteResult.observe(viewLifecycleOwner, Observer { response ->
-
-            viewModel.isFavoriteExistsWithUrl(imgUrl)
-        })
-    }
-
     private fun init() {
 
         viewModel.isFavoriteExistsWithUrl(imgUrl)
@@ -138,6 +113,31 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
             .into(binding.imageView)
     }
 
+    private fun observeLiveData() {
+
+        viewModel.liveDataIsExists.observe(viewLifecycleOwner, Observer { imageResponse ->
+
+            if (imageResponse) {
+                binding.btnFavorite.setImageResource(R.drawable.favorite_icon_fill)
+
+            } else {
+                binding.btnFavorite.setImageResource(R.drawable.favorite_icon)
+
+            }
+        })
+
+        viewModel.liveDataAddResult.observe(viewLifecycleOwner, Observer { response ->
+
+            viewModel.isFavoriteExistsWithUrl(imgUrl)
+
+        })
+
+        viewModel.liveDataDeleteResult.observe(viewLifecycleOwner, Observer { response ->
+
+            viewModel.isFavoriteExistsWithUrl(imgUrl)
+        })
+    }
+
     private fun onClick() {
 
         binding.btnFavorite.setOnClickListener() {
@@ -156,8 +156,8 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
         }
 
         binding.btnShare.setOnClickListener() {
-            val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
-            binding.btnShare.startAnimation(pulsateAnimation)
+            //val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
+            //binding.btnShare.startAnimation(pulsateAnimation)
             shareImage(bitmap)
         }
 

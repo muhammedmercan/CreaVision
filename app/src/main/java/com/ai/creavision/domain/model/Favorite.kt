@@ -14,8 +14,6 @@ class Favorite(
     val prompt: String,
     var imgPath: String = ""
 
-
-
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0

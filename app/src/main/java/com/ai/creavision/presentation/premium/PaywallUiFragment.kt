@@ -1,4 +1,4 @@
-package com.ai.creavision
+package com.ai.creavision.presentation.premium
 
 import android.os.Bundle
 import android.view.View
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.adapty.Adapty
 import com.adapty.models.AdaptyPaywallProduct
 import com.adapty.models.AdaptyProfile
+import com.adapty.models.AdaptyPurchasedInfo
 import com.adapty.ui.AdaptyPaywallInsets
 import com.adapty.ui.AdaptyPaywallView
 import com.adapty.ui.AdaptyUI
@@ -18,16 +19,13 @@ import com.ai.creavision.utils.DataHolder
 
 class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initPaywall()
-
     }
 
     private fun initPaywall() {
-
 
         val paywallView = view as? AdaptyPaywallView ?: return
 
@@ -47,6 +45,16 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
                         parentFragmentManager.popBackStack()
                     }
                 }
+
+                override fun onPurchaseSuccess(
+                    purchasedInfo: AdaptyPurchasedInfo?,
+                    product: AdaptyPaywallProduct,
+                    view: AdaptyPaywallView
+                ) {
+                    super.onPurchaseSuccess(purchasedInfo, product, view)
+                    DataHolder.isPremium = true
+
+                }
             }
         )
 
@@ -61,7 +69,6 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
                 is AdaptyResult.Success -> {
                     val viewConfiguration = result.value
 
-
                     paywallView.showPaywall(
                         viewConfiguration,
                         null,
@@ -69,9 +76,6 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
                         AdaptyUiPersonalizedOfferResolver.DEFAULT,
                         AdaptyUiTagResolver.DEFAULT
                     )
-
-                    println("olumluu2")
-
                 }
 
                 is AdaptyResult.Error -> {
@@ -80,6 +84,5 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
                 }
             }
         }
-
     }
 }

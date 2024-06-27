@@ -23,36 +23,17 @@ class YourArtsViewModel @Inject constructor(
 ): ViewModel() {
 
     val liveData = MutableLiveData<List<Favorite>?>()
-
     var fromHome : Boolean = false
-
-    /*
-    init {
-        getImages()
-    }
-     */
-
 
     fun getImages() {
 
         viewModelScope.launch() {
-
         liveData.value = repository.getAllFavorites()
-/*
-        val photoCacheDir = Glide.getPhotoCacheDir(context)
-        val list = photoCacheDir?.listFiles()?.toMutableList()
-        list?.removeAt(0)
-        DataModel.imageFiles = list
-        liveData.value = Glide.getPhotoCacheDir(context)?.listFiles()?.toMutableList()
 
- */
-        //TODO burası düzeltilcek
-        //liveData.value = DataModel.deneme
 
     }}
 
     fun reset() {
         liveData.value = null
     }
-
 }

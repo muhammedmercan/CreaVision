@@ -27,4 +27,11 @@
     <string name="continue_string">Continue</string>
     <string name="choose_your_plan">Choose Your Plan</string>
 
+    <string name="thank_you_for_subscribing">Thank You for Subscribing!</string>
+    <string name="enjoy_features">Enjoy all features and benefits without any restrictions</string>
+    <string name="manage_subscribe">Manage Subscribe</string>
+    <string name="update_to_pro">Update to Pro</string>
+    <string name="no_favorites">No Favorites</string>
+
+
 </resources>

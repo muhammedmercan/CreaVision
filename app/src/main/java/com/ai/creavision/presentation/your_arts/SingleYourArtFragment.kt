@@ -38,6 +38,8 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
     private val binding get() = _binding!!
     lateinit var bitmap: Bitmap
     lateinit var favorite: Favorite
+    var savedImagePath = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +71,6 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
     private fun init() {
 
         viewModel.isFavoriteExists(favorite.imgPath)
-        var bitmap: Bitmap? = null
 
         try {
             val file = File(favorite.imgPath)
@@ -102,7 +103,7 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
 
         viewModel.liveDataAddResult.observe(viewLifecycleOwner, Observer { response ->
 
-            viewModel.isFavoriteExists(favorite.imgPath)
+            viewModel.isFavoriteExists(savedImagePath)
 
         })
 
@@ -122,14 +123,15 @@ class SingleYourArtFragment @Inject constructor() : BaseFragment() {
                 viewModel.deleteFavorite(favorite.imgPath)
 
             } else {
-                viewModel.addFavorite(Favorite(favorite.imgPath, favorite.prompt))
+                savedImagePath = saveImageToInternalStorage(bitmap)!!
+                viewModel.addFavorite(Favorite(favorite.imgUrl,favorite.prompt, savedImagePath))
                 //binding.btnfavorite.setImageResource(R.drawable.favorite_icon_fill)
             }
         }
 
         binding.btnShare.setOnClickListener() {
-            val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
-            binding.btnShare.startAnimation(pulsateAnimation)
+            //val pulsateAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.scale)
+            //binding.btnShare.startAnimation(pulsateAnimation)
             shareImage(bitmap)
         }
 

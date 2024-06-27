@@ -30,7 +30,7 @@ class YourArtsAdapter @Inject constructor(
             return oldItem.id == newItem.id
         }
         override fun areContentsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
-            return oldItem.imgUrl == newItem.imgUrl
+            return oldItem.imgPath == newItem.imgPath
         }
     }
 
@@ -69,7 +69,7 @@ class YourArtsAdapter @Inject constructor(
 
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {
-                it(Favorite( imgPath = photoFiles?.get(position)?.imgPath!!, prompt =  photoFiles?.get(position)?.prompt!!))
+                it(Favorite( photoFiles?.get(position)?.imgUrl!!, photoFiles?.get(position)?.prompt!!,photoFiles?.get(position)?.imgPath!!))
                 //it(photoFiles?.get(position)?.imgUrl!!)
                 //it(photoFiles?.get(position)?.imgUrl!!)
             }

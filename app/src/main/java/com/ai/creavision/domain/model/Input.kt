@@ -7,7 +7,7 @@ data class Input(
     @SerializedName("height") val height: Int = 1024,
     @SerializedName("prompt") val prompt: String,
     @SerializedName("scheduler") val scheduler: String = "K_EULER",
-    @SerializedName("num_outputs") val numOutputs: Int = 4 ,
+    @SerializedName("num_outputs") val numOutputs: Int = 1 ,
     @SerializedName("negative_prompt") val negativePrompt: String = "worst quality, low quality",
     @SerializedName("num_inference_steps") val numInferenceSteps: Int = 4
 )

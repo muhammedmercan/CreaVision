@@ -50,7 +50,6 @@ class SingleYourArtViewModel @Inject constructor(
     }
 
     fun isFavoriteExists(imgPath: String) {
-        var response = false
         val handler = CoroutineExceptionHandler {context, throwable ->
             println(throwable)
         }

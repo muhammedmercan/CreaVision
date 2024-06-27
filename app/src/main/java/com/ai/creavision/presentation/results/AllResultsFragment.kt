@@ -4,11 +4,13 @@ package com.ai.creavision.presentation.results
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -40,6 +42,8 @@ class AllResultsFragment : Fragment() {
     var width: Int = 0
     var height: Int = 0
 
+    var numOutput = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +74,17 @@ class AllResultsFragment : Fragment() {
         onClick()
 
         if (viewModel.liveData.value == null) {
+
+            if (DataHolder.isPremium) {
+                numOutput = 4
+            }
             viewModel.createImage(
                 PromptRequest(
                     input = Input(
                         width = width,
                         height = height,
                         prompt = prompt,
+                        numOutputs = numOutput,
                         negativePrompt = negativePrompt
                     )
                 )
@@ -104,25 +113,76 @@ class AllResultsFragment : Fragment() {
                 } else {
                     DataHolder.currentGlideCache = false
 
+                    if (DataHolder.isPremium) {
+                        setImageViewClickListener(binding.imageView, imageResponse.imageUrl[0])
+                        setImageViewClickListener(binding.imageView2, imageResponse.imageUrl[1])
+                        setImageViewClickListener(binding.imageView3, imageResponse.imageUrl[2])
+                        setImageViewClickListener(binding.imageView4, imageResponse.imageUrl[3])
+                        loadAndHandleImagePremium(binding.imageView, imageResponse.imageUrl[0])
+                        loadAndHandleImagePremium(binding.imageView2, imageResponse.imageUrl[1])
+                        loadAndHandleImagePremium(binding.imageView3, imageResponse.imageUrl[2])
+                        loadAndHandleImagePremium(binding.imageView4, imageResponse.imageUrl[3])
+                        resetImage(binding.imageView2)
+                        resetImage(binding.imageView3)
+                        resetImage(binding.imageView4)
 
-                    setImageViewClickListener(binding.imageView, imageResponse.imageUrl[0])
-                    setImageViewClickListener(binding.imageView2, imageResponse.imageUrl[1])
-                    setImageViewClickListener(binding.imageView3, imageResponse.imageUrl[2])
-                    setImageViewClickListener(binding.imageView4, imageResponse.imageUrl[3])
+                    } else {
 
-                    loadAndHandleImage(binding.imageView, imageResponse.imageUrl[0])
-                    loadAndHandleImage(binding.imageView2, imageResponse.imageUrl[1])
-                    loadAndHandleImage(binding.imageView3, imageResponse.imageUrl[2])
-                    loadAndHandleImage(binding.imageView4, imageResponse.imageUrl[3])
-
-
+                        setImageViewClickListener(binding.imageView, imageResponse.imageUrl[0])
+                        setImageViewClickListener(binding.imageView2, imageResponse.imageUrl[0])
+                        setImageViewClickListener(binding.imageView3, imageResponse.imageUrl[0])
+                        setImageViewClickListener(binding.imageView4, imageResponse.imageUrl[0])
+                        loadAndHandleImagePremium(binding.imageView, imageResponse.imageUrl[0])
+                        loadAndHandleImage(binding.imageView2, imageResponse.imageUrl[0], binding.imgLock, binding.txtLock)
+                        loadAndHandleImage(binding.imageView3, imageResponse.imageUrl[0], binding.imgLock2, binding.txtLock2)
+                        loadAndHandleImage(binding.imageView4, imageResponse.imageUrl[0], binding.imgLock3, binding.txtLock3)
+                    }
                 }
             }
         }
         )
     }
 
-    private fun loadAndHandleImage(imageView: ImageView, imageUrl: String) {
+    private fun resetImage(imageView: ImageView) {
+        imageView.alpha = 1F
+        imageView.imageTintList = null
+    }
+
+
+    private fun loadAndHandleImage(imageView: ImageView, imageUrl: String, imgLock: ImageView, txtLock:TextView) {
+        Glide.with(this)
+            .load(imageUrl)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    // Handle failed loading
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable,
+                    model: Any,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    // Handle successful loading
+                    binding.animationView.pauseAnimation()
+                    binding.animationView.visibility = View.GONE
+
+                    imgLock.visibility = View.VISIBLE
+                    txtLock.visibility = View.VISIBLE
+                    return false
+                }
+            })
+            .into(imageView)
+    }
+
+    private fun loadAndHandleImagePremium(imageView: ImageView, imageUrl: String) {
         Glide.with(this)
             .load(imageUrl)
             .listener(object : RequestListener<Drawable> {
@@ -154,12 +214,24 @@ class AllResultsFragment : Fragment() {
 
 
     private fun setImageViewClickListener(imageView: ImageView, imageUrl: String) {
-        imageView.setOnClickListener {
-            val args = Bundle().apply {
-                putString("imgUrl", imageUrl)
-                putString("prompt", prompt)
+
+        if (DataHolder.isPremium || imageView == binding.imageView) {
+            imageView.setOnClickListener {
+                val args = Bundle().apply {
+                    putString("imgUrl", imageUrl)
+                    putString("prompt", prompt)
+                }
+                findNavController().navigate(
+                    R.id.action_allResultsFragment_to_singleResultFragment,
+                    args
+                )
             }
-            findNavController().navigate(R.id.action_allResultsFragment_to_singleResultFragment, args)
+        }
+        else {
+            imageView.setOnClickListener {
+                findNavController().navigate(R.id.action_allResultsFragment_to_paywallUiFragment)
+            }
+
         }
     }
 
