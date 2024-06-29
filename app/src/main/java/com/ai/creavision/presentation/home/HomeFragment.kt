@@ -31,11 +31,13 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeFragment @Inject constructor(
-    private val homeAdapter: HomeAdapter,
-    private val artStyleAdapter: ArtStyleAdapter
+class HomeFragment() : Fragment() {
 
-) : Fragment() {
+    @Inject lateinit var homeAdapter: HomeAdapter
+    @Inject lateinit var artStyleAdapter: ArtStyleAdapter
+
+
+
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -113,15 +115,14 @@ class HomeFragment @Inject constructor(
 
         binding.btnPremium.setOnClickListener() {
 
-            if (DataHolder.paywall != null || !DataHolder.isPremium) {
+            if (DataHolder.paywall != null && !DataHolder.isPremium) {
                 println(DataHolder.paywall)
                 println(DataHolder.isPremium)
                 findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
             }
 
-            else{
-                //findNavController().navigate(R.id.action_homeFragment_to_alreadyPremiumFragment)
-                findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+            if (DataHolder.isPremium) {
+                findNavController().navigate(R.id.action_homeFragment_to_alreadyPremiumFragment)
 
             }
         }
@@ -283,9 +284,12 @@ class HomeFragment @Inject constructor(
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        // View ile ilgili kaynakları serbest bırakmak için gerekli işlemler
+        binding.recyclerViewHome.setAdapter(null);
+        _binding = null
         rewardedAd = null
         isLoading = false
+        super.onDestroyView()
+        // View ile ilgili kaynakları serbest bırakmak için gerekli işlemler
+
     }
 }

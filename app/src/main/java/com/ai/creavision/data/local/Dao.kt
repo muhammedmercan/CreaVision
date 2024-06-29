@@ -9,7 +9,7 @@ import com.ai.creavision.domain.model.Favorite
 interface Dao {
 
 
-    @Query("SELECT * FROM Favorites")
+    @Query("SELECT * FROM Favorites ORDER BY id DESC")
     suspend fun getAllFavorites(): List<Favorite>
 
     @Insert

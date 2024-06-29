@@ -1,6 +1,5 @@
 package com.ai.creavision.presentation.your_arts
 
-
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
@@ -10,25 +9,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ai.creavision.databinding.ItemArtBinding
 import com.ai.creavision.domain.model.Favorite
-import com.squareup.picasso.Picasso
+import java.io.ByteArrayOutputStream
 import java.io.File
 import javax.inject.Inject
 
+class YourArtsAdapter @Inject constructor() : RecyclerView.Adapter<YourArtsAdapter.ViewHolder>() {
 
-class YourArtsAdapter @Inject constructor(
-
-) : RecyclerView.Adapter<YourArtsAdapter.ViewHolder>() {
-
-    private var onItemClickListener : ((Favorite) -> Unit)? = null
-
+    private var onItemClickListener: ((Favorite) -> Unit)? = null
 
     class ViewHolder(val binding: ItemArtBinding) : RecyclerView.ViewHolder(binding.root)
-
 
     private val diffUtil = object : DiffUtil.ItemCallback<Favorite>() {
         override fun areItemsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
             return oldItem.id == newItem.id
         }
+
         override fun areContentsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
             return oldItem.imgPath == newItem.imgPath
         }
@@ -41,11 +36,11 @@ class YourArtsAdapter @Inject constructor(
         set(value) = recyclerListDiffer.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemArtBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemArtBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    fun setOnItemClickListener(listener : (Favorite) -> Unit) {
+    fun setOnItemClickListener(listener: (Favorite) -> Unit) {
         onItemClickListener = listener
     }
 
@@ -65,13 +60,26 @@ class YourArtsAdapter @Inject constructor(
             null
         }
 
-        holder.binding.imageView.setImageBitmap(bitmap)
+        //Bitmap boyutunu küçültmek için
+        val outputStream = ByteArrayOutputStream()
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+        val compressedByteArray = outputStream.toByteArray()
+        val compressedBitmap =
+            BitmapFactory.decodeByteArray(compressedByteArray, 0, compressedByteArray.size)
+
+
+        holder.binding.imageView.setImageBitmap(compressedBitmap)
+        bitmap?.recycle()
 
         holder.itemView.setOnClickListener() {
             onItemClickListener?.let {
-                it(Favorite( photoFiles?.get(position)?.imgUrl!!, photoFiles?.get(position)?.prompt!!,photoFiles?.get(position)?.imgPath!!))
-                //it(photoFiles?.get(position)?.imgUrl!!)
-                //it(photoFiles?.get(position)?.imgUrl!!)
+                it(
+                    Favorite(
+                        photoFiles?.get(position)?.imgUrl!!,
+                        photoFiles?.get(position)?.prompt!!,
+                        photoFiles?.get(position)?.imgPath!!
+                    )
+                )
             }
         }
     }
@@ -79,4 +87,6 @@ class YourArtsAdapter @Inject constructor(
     override fun getItemCount(): Int {
         return photoFiles!!.size
     }
+
+
 }

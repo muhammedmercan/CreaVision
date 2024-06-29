@@ -1,9 +1,7 @@
 package com.ai.creavision
 
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +12,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.adapty.Adapty
 import com.adapty.models.AdaptyConfig
 import com.adapty.utils.AdaptyResult
-import com.ai.creavision.presentation.home.CreaVisionFragmentFactory
 import com.ai.creavision.utils.DataHolder
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -81,7 +78,6 @@ class MainActivity : AppCompatActivity() {
                     if (profile.accessLevels["premium"]?.isActive == true) {
                         DataHolder.isPremium = true
                         println("premium")
-                        initPaywall()
                     } else {
                         initPaywall()
                     }

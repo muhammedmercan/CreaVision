@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
 
-    private var onItemClickListener : ((Int) -> Unit)? = null
+    private var onItemClickListener: ((Int) -> Unit)? = null
 
     class ViewHolder(val binding: ItemArtStyleHomeBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -25,9 +25,7 @@ class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewH
         }
 
         override fun areContentsTheSame(oldItem: ArtStyle, newItem: ArtStyle): Boolean {
-
-            return  oldItem == newItem
-
+            return oldItem == newItem
         }
     }
 
@@ -37,15 +35,12 @@ class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewH
         get() = recyclerListDiffer.currentList
         set(value) = recyclerListDiffer.submitList(value)
 
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemArtStyleHomeBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemArtStyleHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    fun setOnItemClickListener(listener : (Int) -> Unit) {
+    fun setOnItemClickListener(listener: (Int) -> Unit) {
         onItemClickListener = listener
     }
 
@@ -58,14 +53,24 @@ class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewH
         if (Style.getValue() == artyStyleResponseList[position].name) {
             holder.binding.imgArtStyle.strokeWidth = 10F
             holder.binding.imgArtStyle.alpha = 0.5F
-            holder.binding.txtArtStyle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorPrimary))
+            holder.binding.txtArtStyle.setTextColor(
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.colorPrimary
+                )
+            )
             holder.binding.imgCheckIcon.visibility = View.VISIBLE
 
 
         } else {
             holder.binding.imgArtStyle.strokeWidth = 0F
             holder.binding.imgArtStyle.alpha = 1F
-            holder.binding.txtArtStyle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.white))
+            holder.binding.txtArtStyle.setTextColor(
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.white
+                )
+            )
             holder.binding.imgCheckIcon.visibility = View.INVISIBLE
 
         }
@@ -75,7 +80,12 @@ class HomeAdapter @Inject constructor() : RecyclerView.Adapter<HomeAdapter.ViewH
 
             holder.binding.imgArtStyle.strokeWidth = 10F
             holder.binding.imgArtStyle.alpha = 0.5F
-            holder.binding.txtArtStyle.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.colorPrimary))
+            holder.binding.txtArtStyle.setTextColor(
+                ContextCompat.getColor(
+                    holder.itemView.context,
+                    R.color.colorPrimary
+                )
+            )
             holder.binding.imgCheckIcon.visibility = View.VISIBLE
 
 

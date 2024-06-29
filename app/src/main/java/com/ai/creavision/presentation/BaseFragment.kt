@@ -126,8 +126,7 @@ open class BaseFragment : Fragment() {
                         )
                     )
                 }
-            }
-            else {
+            } else {
                 allPermissionsGranted = true
             }
         }
@@ -151,13 +150,16 @@ open class BaseFragment : Fragment() {
         val fileOutputStream = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
         fileOutputStream.close()
-        return FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.fileprovider", file)
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${requireContext().packageName}.fileprovider",
+            file
+        )
     }
 
     fun saveImage(image: Bitmap): String? {
 
         var savedImagePath: String? = null
-
         val dateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")
         val formattedDateTime = dateTime.format(formatter)
@@ -181,15 +183,16 @@ open class BaseFragment : Fragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
-            // Add the image to the system gallery
             galleryAddPic(savedImagePath)
-
             CoroutineScope(Dispatchers.Main).launch {
                 Snackbar.make(requireView(), R.string.image_saved, Snackbar.LENGTH_SHORT).show()
             }
         } else {
-            Snackbar.make(requireView(), R.string.image_could_not_be_downloaded, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                requireView(),
+                R.string.image_could_not_be_downloaded,
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
         return savedImagePath
     }
@@ -203,7 +206,7 @@ open class BaseFragment : Fragment() {
         val formattedDateTime = dateTime.format(formatter)
 
         val imageFileName = "CreaVision_$formattedDateTime.jpg"
-        val storageDir = File(context?.filesDir,"favorites")
+        val storageDir = File(context?.filesDir, "favorites")
 
         var success = true
         if (!storageDir.exists()) {
@@ -219,15 +222,12 @@ open class BaseFragment : Fragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
-            // Add the image to the system gallery
-            //galleryAddPic(savedImagePath)
-
-            CoroutineScope(Dispatchers.Main).launch {
-                Snackbar.make(requireView(), R.string.image_saved, Snackbar.LENGTH_SHORT).show()
-            }
         } else {
-            Snackbar.make(requireView(), R.string.image_could_not_be_downloaded, Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                requireView(),
+                R.string.image_could_not_be_downloaded,
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
         return savedImagePath
     }

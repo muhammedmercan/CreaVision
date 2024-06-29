@@ -15,8 +15,8 @@ android {
         applicationId = "com.ai.creavision"
         minSdk = 23
         targetSdk = 34
-        versionCode = 3
-        versionName = "1.2"
+        versionCode = 8
+        versionName = "1.7"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -49,6 +49,8 @@ class YourArtsFragment @Inject constructor(
         //onScroll()
         observeLiveData()
 
+        binding.progressBar.visibility = View.VISIBLE
+
         viewModel.getImages()
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
@@ -62,6 +64,8 @@ class YourArtsFragment @Inject constructor(
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.liveData.observe(viewLifecycleOwner, Observer { imageResponse ->
+
+                    binding.progressBar.visibility = View.GONE
 
                     imageResponse?.let {
                         if (!imageResponse.isNullOrEmpty()) {
@@ -84,6 +88,14 @@ class YourArtsFragment @Inject constructor(
     override fun onDestroy() {
         super.onDestroy()
         viewModel.fromHome = true
+    }
+
+    override fun onDestroyView() {
+        binding.recyclerViewYourArts.setAdapter(null);
+        _binding = null
+        super.onDestroyView()
+
+
     }
 
     private fun onClick() {
