@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -15,11 +17,19 @@ android {
         applicationId = "com.ai.creavision"
         minSdk = 23
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.7"
+        versionCode = 9
+        versionName = "1.8"
+
+
+        var properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String","REPLICATE_API_KEY",  "\"${properties.getProperty("REPLICATE_API_KEY")}\"")
+        buildConfigField("String","REWARDED_AD",  "\"${properties.getProperty("REWARDED_AD")}\"")
+        buildConfigField("String","ADAPTY_API_KEY",  "\"${properties.getProperty("ADAPTY_API_KEY")}\"")
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -42,6 +52,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -119,3 +130,4 @@ dependencies {
 
 
 }
+

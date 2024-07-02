@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:alpha="0.15"
+                    android:alpha="0.10"
                     android:background="@drawable/edit_text_shape"
                     android:scaleType="fitCenter"
                     app:shapeAppearanceOverlay="@style/circular"
@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:alpha="0.15"
+                    android:alpha="0.10"
                     android:background="@drawable/edit_text_shape"
                     android:scaleType="fitCenter"
                     app:shapeAppearanceOverlay="@style/circular"
@@ -136,11 +136,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
-                    android:alpha="0.15"
+                    android:alpha="0.10"
                     android:background="@drawable/edit_text_shape"
                     android:scaleType="fitCenter"
                     app:shapeAppearanceOverlay="@style/circular"
-                    app:tint="#FF5722"
+                    app:tint="#E91E63"
                     app:tintMode="multiply" />
 
                 <ImageView

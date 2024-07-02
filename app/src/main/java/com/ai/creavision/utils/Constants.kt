@@ -1,18 +1,17 @@
 package com.ai.creavision.utils
 
+import com.ai.creavision.BuildConfig
 import com.ai.creavision.R
 import com.ai.creavision.domain.model.ArtStyle
 import com.ai.creavision.domain.model.ArtStylePrompt
 
 object Constants {
 
-    //const val BASE_URL = "https://api.openai.com/v1/images/"
 
     const val BASE_URL = "https://api.replicate.com/v1/"
-
-    private const val REWARDED_AD = "ca-app-pub-3940256099942544/5224354917"
-
-
+    const val REPLICATE_API_KEY = BuildConfig.REPLICATE_API_KEY
+    const val REWARDED_AD = BuildConfig.REWARDED_AD
+    const val ADAPTY_API_KEY = BuildConfig.ADAPTY_API_KEY
 
 
     var PROMPTS = mapOf(

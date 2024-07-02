@@ -248,6 +248,7 @@
         android:text="PRO"
         android:textColor="@color/white"
         android:textSize="15sp"
+        android:visibility="invisible"
         app:backgroundTint="@null"
         app:icon="@drawable/premium_icon"
         app:iconSize="20sp"

@@ -1,6 +1,7 @@
 package com.ai.creavision.presentation.home
 
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentHomeBinding
@@ -30,25 +32,28 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
+
 @AndroidEntryPoint
-class HomeFragment() : Fragment() {
+class HomeFragment: Fragment() {
 
-    @Inject lateinit var homeAdapter: HomeAdapter
-    @Inject lateinit var artStyleAdapter: ArtStyleAdapter
+    @Inject
+    lateinit  var homeAdapter: HomeAdapter
 
-
-
+    @Inject
+    lateinit  var artStyleAdapter: ArtStyleAdapter
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(artStyleAdapter)
-    private val premiumModalBottomSheet = PremiumBottomSheetModel()
+    private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(ArtStyleAdapter())
 
     private var rewardedAd: RewardedAd? = null
     private final var TAG = "MainActivity"
 
     private var isLoading = false
+
+    var count = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,6 +90,8 @@ class HomeFragment() : Fragment() {
         checkInternetConnection()
         onClick()
         loadRewardedAd()
+        observeLiveData()
+
 
         binding.recyclerViewHome.adapter = homeAdapter
         homeAdapter.artyStyleResponseList = Constants.ART_STYLES
@@ -111,17 +118,38 @@ class HomeFragment() : Fragment() {
         })
     }
 
+    private fun observeLiveData() {
+
+        DataHolder.paywall.observe(viewLifecycleOwner, Observer {
+
+            if (count == 0) {
+                findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+                count++
+            }
+            if (DataHolder.paywall.value != null) {
+                binding.btnPremium.visibility = View.VISIBLE
+            }
+        })
+
+        DataHolder.isPremium.observe(viewLifecycleOwner, Observer {
+
+            if (it!!) {
+                binding.btnPremium.visibility = View.VISIBLE
+            }
+        })
+    }
+
     private fun onClick() {
 
         binding.btnPremium.setOnClickListener() {
 
-            if (DataHolder.paywall != null && !DataHolder.isPremium) {
+            if (DataHolder.paywall != null && !DataHolder.isPremium.value!!) {
                 println(DataHolder.paywall)
                 println(DataHolder.isPremium)
                 findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
             }
 
-            if (DataHolder.isPremium) {
+            if (DataHolder.isPremium.value!!) {
                 findNavController().navigate(R.id.action_homeFragment_to_alreadyPremiumFragment)
 
             }
@@ -148,7 +176,7 @@ class HomeFragment() : Fragment() {
 
         binding.btnGenerate.setOnClickListener() {
             if (checkInternetConnection()) {
-                if (!DataHolder.isPremium) {
+                if (DataHolder.isPremium.value!!) {
                     if (rewardedAd != null) {
                         showRewardedAd()
                     } else {
@@ -222,7 +250,7 @@ class HomeFragment() : Fragment() {
 
             RewardedAd.load(
                 requireContext(),
-                "ca-app-pub-3940256099942544/5224354917",
+                Constants.REWARDED_AD,
                 adRequest,
                 object : RewardedAdLoadCallback() {
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {

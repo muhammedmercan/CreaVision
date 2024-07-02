@@ -1,6 +1,7 @@
 package com.ai.creavision
 
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -12,6 +13,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.adapty.Adapty
 import com.adapty.models.AdaptyConfig
 import com.adapty.utils.AdaptyResult
+import com.ai.creavision.utils.Constants
+import com.ai.creavision.utils.Constants.REPLICATE_API_KEY
 import com.ai.creavision.utils.DataHolder
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         Adapty.activate(
             applicationContext,
-            AdaptyConfig.Builder("public_live_ZurMY5sb.E9iUhWnMgf0fnzmiRQck")
+            AdaptyConfig.Builder(Constants.ADAPTY_API_KEY)
                 .withObserverMode(false) //default false
                 .withIpAddressCollectionDisabled(false) //default false
                 .build()
@@ -76,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     val profile = result.value
 
                     if (profile.accessLevels["premium"]?.isActive == true) {
-                        DataHolder.isPremium = true
+                        DataHolder.isPremium.value = true
                         println("premium")
                     } else {
                         initPaywall()
@@ -101,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
                         when (productResult) {
                             is AdaptyResult.Success -> {
-                                DataHolder.paywall = paywallResult.value
+                                DataHolder.paywall.value = paywallResult.value
                             }
 
                             is AdaptyResult.Error -> {

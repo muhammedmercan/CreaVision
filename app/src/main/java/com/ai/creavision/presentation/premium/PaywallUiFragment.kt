@@ -41,7 +41,7 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
                     view: AdaptyPaywallView,
                 ) {
                     if (profile.accessLevels["premium"]?.isActive == true) {
-                        DataHolder.isPremium = true
+                        DataHolder.isPremium.value = true
                         parentFragmentManager.popBackStack()
                     }
                 }
@@ -52,7 +52,7 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
                     view: AdaptyPaywallView
                 ) {
                     super.onPurchaseSuccess(purchasedInfo, product, view)
-                    DataHolder.isPremium = true
+                    DataHolder.isPremium.value = true
 
                 }
             }
@@ -64,7 +64,7 @@ class PaywallUiFragment : Fragment(R.layout.fragment_paywall_ui) {
          * call `paywallView.showPaywall(paywall, products, viewConfig, AdaptyPaywallInsets.NONE)`
          */
 
-        AdaptyUI.getViewConfiguration(DataHolder.paywall!!) { result ->
+        AdaptyUI.getViewConfiguration(DataHolder.paywall.value!!) { result ->
             when (result) {
                 is AdaptyResult.Success -> {
                     val viewConfiguration = result.value

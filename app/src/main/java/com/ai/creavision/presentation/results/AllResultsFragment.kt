@@ -75,7 +75,7 @@ class AllResultsFragment : Fragment() {
 
         if (viewModel.liveData.value == null) {
 
-            if (DataHolder.isPremium) {
+            if (DataHolder.isPremium.value!!) {
                 numOutput = 4
             }
             viewModel.createImage(
@@ -100,10 +100,11 @@ class AllResultsFragment : Fragment() {
 
             imageResponse?.let {
 
-                if (!imageResponse.error.isNullOrEmpty()) {
+                if (!imageResponse.error.isNullOrEmpty() || imageResponse.logs.contains("NSFW")) {
                     MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Error")
                         .setMessage(it.error)
+                        .setMessage("NSFW content detected. Try running it again, or try a different prompt.")
                         .setPositiveButton("Understand") { dialog, which ->
                             dialog.dismiss()
                             findNavController().popBackStack()
@@ -113,7 +114,7 @@ class AllResultsFragment : Fragment() {
                 } else {
                     DataHolder.currentGlideCache = false
 
-                    if (DataHolder.isPremium) {
+                    if (DataHolder.isPremium.value!!) {
                         setImageViewClickListener(binding.imageView, imageResponse.imageUrl[0])
                         setImageViewClickListener(binding.imageView2, imageResponse.imageUrl[1])
                         setImageViewClickListener(binding.imageView3, imageResponse.imageUrl[2])
@@ -215,7 +216,7 @@ class AllResultsFragment : Fragment() {
 
     private fun setImageViewClickListener(imageView: ImageView, imageUrl: String) {
 
-        if (DataHolder.isPremium || imageView == binding.imageView) {
+        if (DataHolder.isPremium.value!! || imageView == binding.imageView) {
             imageView.setOnClickListener {
                 val args = Bundle().apply {
                     putString("imgUrl", imageUrl)

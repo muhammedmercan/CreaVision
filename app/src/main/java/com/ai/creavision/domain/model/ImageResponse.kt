@@ -8,7 +8,8 @@ data class ImageResponse(
     @SerializedName("output")
     val imageUrl: List<String>,
     val status: String,
-    val error: String
+    val error: String,
+    val logs: String
 ) {
 
     fun getItemCount(): Int {
