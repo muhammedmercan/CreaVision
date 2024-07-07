@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,15 +16,20 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ai.creavision.R
 import com.ai.creavision.databinding.FragmentYourArtsBinding
+import com.ai.creavision.presentation.home.ArtStyleAdapter
+import com.google.android.play.core.review.ReviewException
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.model.ReviewErrorCode
+import com.google.android.play.core.review.testing.FakeReviewManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class YourArtsFragment @Inject constructor(
-    private val yourArtsAdapter: YourArtsAdapter
+class YourArtsFragment : Fragment() {
 
-) : Fragment() {
+    @Inject
+    lateinit  var yourArtsAdapter: YourArtsAdapter
 
     private var _binding: FragmentYourArtsBinding? = null
     private val binding get() = _binding!!
@@ -48,6 +54,8 @@ class YourArtsFragment @Inject constructor(
         onClick()
         //onScroll()
         observeLiveData()
+
+
 
         binding.progressBar.visibility = View.VISIBLE
 

@@ -1,6 +1,5 @@
 package com.ai.creavision.presentation.results
 
-import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

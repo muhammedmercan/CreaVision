@@ -144,7 +144,6 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
 
             if (viewModel.liveDataIsExists.value!!) {
                 //binding.btnfavorite.setImageResource(R.drawable.favorite_icon)
-
                 viewModel.deleteProductWithUrl(imgUrl)
 
             } else {

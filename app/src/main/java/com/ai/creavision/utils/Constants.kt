@@ -10,6 +10,7 @@ object Constants {
 
     const val BASE_URL = "https://api.replicate.com/v1/"
     const val REPLICATE_API_KEY = BuildConfig.REPLICATE_API_KEY
+    const val REWARDED_AD_EXAMPLE = BuildConfig.REWARDED_AD_EXAMPLE
     const val REWARDED_AD = BuildConfig.REWARDED_AD
     const val ADAPTY_API_KEY = BuildConfig.ADAPTY_API_KEY
 

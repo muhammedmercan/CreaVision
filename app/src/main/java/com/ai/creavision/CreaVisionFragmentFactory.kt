@@ -23,7 +23,7 @@ class CreaVisionFragmentFactory @Inject constructor(
             HomeFragment::class.java.name -> HomeFragment()
             AllResultsFragment::class.java.name -> AllResultsFragment()
             FullScreenDialogFragment::class.java.name -> FullScreenDialogFragment()
-            YourArtsFragment::class.java.name -> YourArtsFragment(yourArtsAdapter)
+            YourArtsFragment::class.java.name -> YourArtsFragment()
 
             else -> super.instantiate(classLoader, className)
         }

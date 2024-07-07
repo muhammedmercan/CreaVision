@@ -10,5 +10,5 @@ object DataHolder {
 
     var paywall = MutableLiveData<AdaptyPaywall?>()
 
-    var isPremium = MutableLiveData<Boolean>()
+    var isPremium = MutableLiveData(false)
 }

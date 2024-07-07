@@ -4,7 +4,6 @@ package com.ai.creavision.presentation.results
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,11 +26,18 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.play.core.review.ReviewException
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.model.ReviewErrorCode
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class AllResultsFragment : Fragment() {
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     private var _binding: FragmentAllResultsBinding? = null
     private val binding get() = _binding!!
@@ -89,8 +95,36 @@ class AllResultsFragment : Fragment() {
                     )
                 )
             )
+
+            val currentValue = sharedPreferences.getInt("count", 0)
+            val count = currentValue + 1
+            sharedPreferences.edit().putInt("count",count).commit()
+
+            if (count == 10 || count == 50 || (count % 100 == 0) ) {
+                showInAppView()
+            }
         }
         observeLiveData()
+    }
+
+    private fun showInAppView() {
+
+        val manager = ReviewManagerFactory.create(requireContext())
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // We got the ReviewInfo object
+                val reviewInfo = task.result
+
+                val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
+                flow.addOnCompleteListener { _ ->
+                    // Değerlendirme akışı tamamlandığında yapılacak işlemler
+                }
+            } else {
+                // There was some problem, log or handle the error code.
+                @ReviewErrorCode val reviewErrorCode = (task.getException() as ReviewException).errorCode
+            }
+        }
     }
 
 
@@ -229,10 +263,11 @@ class AllResultsFragment : Fragment() {
             }
         }
         else {
-            imageView.setOnClickListener {
-                findNavController().navigate(R.id.action_allResultsFragment_to_paywallUiFragment)
+            if (DataHolder.paywall.value != null) {
+                imageView.setOnClickListener {
+                    findNavController().navigate(R.id.action_allResultsFragment_to_paywallUiFragment)
+                }
             }
-
         }
     }
 

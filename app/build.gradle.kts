@@ -6,6 +6,7 @@ plugins {
     id ("androidx.navigation.safeargs.kotlin")
     id ("com.google.dagger.hilt.android")
     id ("com.google.devtools.ksp")
+    id("com.google.gms.google-services")
 
 }
 
@@ -17,13 +18,14 @@ android {
         applicationId = "com.ai.creavision"
         minSdk = 23
         targetSdk = 34
-        versionCode = 9
-        versionName = "1.8"
+        versionCode = 18
+        versionName = "2.8"
 
 
         var properties = Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
         buildConfigField("String","REPLICATE_API_KEY",  "\"${properties.getProperty("REPLICATE_API_KEY")}\"")
+        buildConfigField("String","REWARDED_AD_EXAMPLE",  "\"${properties.getProperty("REWARDED_AD_EXAMPLE")}\"")
         buildConfigField("String","REWARDED_AD",  "\"${properties.getProperty("REWARDED_AD")}\"")
         buildConfigField("String","ADAPTY_API_KEY",  "\"${properties.getProperty("ADAPTY_API_KEY")}\"")
 
@@ -100,10 +102,13 @@ dependencies {
 
     implementation ("com.google.android.gms:play-services-ads:23.1.0")
 
+
     implementation("com.android.billingclient:billing:7.0.0")
 
     implementation("com.google.firebase:firebase-crashlytics-buildtools:3.0.0")
 
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
+    implementation("com.google.firebase:firebase-analytics")
     //implementation("com.github.akshaaatt:Google-IAP:1.6.0")
 
     implementation("io.adapty:android-sdk:2.11.2")
@@ -121,6 +126,7 @@ dependencies {
 
     implementation("androidx.core:core-splashscreen:1.0.0")
 
+    implementation("com.google.android.play:review-ktx:2.0.1")
 
 
 

@@ -1,266 +1,271 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/txtEnterPrompt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/enter_prompt"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/AppName" />
-
-    <EditText
-        android:id="@+id/editTextPrompt"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_shape"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="@string/what_do_you_want_to_create"
-        android:inputType="textMultiLine"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/txtEnterPrompt" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="20dp" />
-
-    <TextView
-        android:id="@+id/AppName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="CreaVision"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/btnSupriseMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:clickable="true"
-        app:cardBackgroundColor="@color/text_field_background"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPrompt"
-        app:strokeWidth="0dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/txtEnterPrompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/enter_prompt"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/AppName" />
+
+        <EditText
+            android:id="@+id/editTextPrompt"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edit_text_shape"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/what_do_you_want_to_create"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/txtEnterPrompt" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp" />
+
+        <TextView
+            android:id="@+id/AppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="CreaVision"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnSupriseMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            app:cardBackgroundColor="@color/text_field_background"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPrompt"
+            app:strokeWidth="0dp">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/suprise_me" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <Button
+            android:id="@+id/btnGenerate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.5"
+            android:background="@drawable/button_gradient"
+            android:clickable="false"
+            android:enabled="false"
             android:paddingTop="10dp"
-            android:paddingRight="20dp"
             android:paddingBottom="10dp"
-            android:text="@string/suprise_me" />
-    </com.google.android.material.card.MaterialCardView>
+            android:text="@string/create"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:backgroundTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewHome" />
 
-    <Button
-        android:id="@+id/btnGenerate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:alpha="0.5"
-        android:background="@drawable/button_gradient"
-        android:clickable="false"
-        android:enabled="false"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/create"
-        android:textColor="@color/white"
-        android:textSize="17sp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewHome" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/art_style"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewHome"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:listitem="@layout/item_art_style_home" />
-
-    <TextView
-        android:id="@+id/btnClearText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clear Text"
-        android:textColor="@color/colorPrimary"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSupriseMe"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/btnSupriseMe" />
-
-    <TextView
-        android:id="@+id/btnSeeAll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/see_all"
-        android:textColor="@color/colorPrimary"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewHome"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2" />
-
-
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroupAspectRatio"
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:singleSelection="true">
+            android:layout_marginTop="20dp"
+            android:text="@string/art_style"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip1.1"
-                style="@style/CustomChipChoice"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            tools:listitem="@layout/item_art_style_home" />
+
+        <TextView
+            android:id="@+id/btnClearText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear Text"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnSupriseMe"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/btnSupriseMe" />
+
+        <TextView
+            android:id="@+id/btnSeeAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/see_all"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewHome"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2" />
+
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupAspectRatio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="1 : 1"
-                app:chipIcon="@drawable/aspect_ratio_1_1" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:singleSelection="true">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip9.16"
-                style="@style/CustomChipChoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="9 : 16"
-                app:chipIcon="@drawable/aspect_ratio_9_16" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip1.1"
+                    style="@style/CustomChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="1 : 1"
+                    app:chipIcon="@drawable/aspect_ratio_1_1" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip16.9"
-                style="@style/CustomChipChoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="16 : 9"
-                app:chipIcon="@drawable/aspect_ratio_16_9" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip9.16"
+                    style="@style/CustomChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="9 : 16"
+                    app:chipIcon="@drawable/aspect_ratio_9_16" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip4.3"
-                style="@style/CustomChipChoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4 : 3"
-                app:chipIcon="@drawable/aspect_ratio_4_3" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip16.9"
+                    style="@style/CustomChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16 : 9"
+                    app:chipIcon="@drawable/aspect_ratio_16_9" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip3.4"
-                style="@style/CustomChipChoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3 : 4"
-                app:chipIcon="@drawable/aspect_ratio_3_4" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip4.3"
+                    style="@style/CustomChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4 : 3"
+                    app:chipIcon="@drawable/aspect_ratio_4_3" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip2.3"
-                style="@style/CustomChipChoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2 : 3"
-                app:chipIcon="@drawable/aspect_ratio_2_3" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip3.4"
+                    style="@style/CustomChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 : 4"
+                    app:chipIcon="@drawable/aspect_ratio_3_4" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip3.2"
-                style="@style/CustomChipChoice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3 : 2"
-                app:chipIcon="@drawable/aspect_ratio_3_2" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip2.3"
+                    style="@style/CustomChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2 : 3"
+                    app:chipIcon="@drawable/aspect_ratio_2_3" />
 
-        </com.google.android.material.chip.ChipGroup>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip3.2"
+                    style="@style/CustomChipChoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3 : 2"
+                    app:chipIcon="@drawable/aspect_ratio_3_2" />
 
-    </HorizontalScrollView>
+            </com.google.android.material.chip.ChipGroup>
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/aspect_ratio"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/btnSupriseMe" />
+        </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/btnPremium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/button_gradient"
-        android:paddingLeft="18dp"
-        android:paddingTop="3dp"
-        android:paddingRight="18dp"
-        android:paddingBottom="3dp"
-        android:text="PRO"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:visibility="invisible"
-        app:backgroundTint="@null"
-        app:icon="@drawable/premium_icon"
-        app:iconSize="20sp"
-        app:iconTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/AppName"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/AppName"
-        app:strokeWidth="1dp" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/aspect_ratio"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/btnSupriseMe" />
+
+        <Button
+            android:id="@+id/btnPremium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/button_gradient"
+            android:paddingLeft="18dp"
+            android:paddingTop="3dp"
+            android:paddingRight="18dp"
+            android:paddingBottom="3dp"
+            android:text="PRO"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:visibility="invisible"
+            app:backgroundTint="@null"
+            app:icon="@drawable/premium_icon"
+            app:iconSize="20sp"
+            app:iconTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/AppName"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="@+id/AppName"
+            app:strokeWidth="1dp" />
 
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
 

@@ -92,7 +92,6 @@ class HomeFragment: Fragment() {
         loadRewardedAd()
         observeLiveData()
 
-
         binding.recyclerViewHome.adapter = homeAdapter
         homeAdapter.artyStyleResponseList = Constants.ART_STYLES
 
@@ -176,7 +175,7 @@ class HomeFragment: Fragment() {
 
         binding.btnGenerate.setOnClickListener() {
             if (checkInternetConnection()) {
-                if (DataHolder.isPremium.value!!) {
+                if (!DataHolder.isPremium.value!!) {
                     if (rewardedAd != null) {
                         showRewardedAd()
                     } else {
