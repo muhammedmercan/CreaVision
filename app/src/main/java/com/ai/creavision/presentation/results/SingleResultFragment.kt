@@ -20,6 +20,7 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import javax.inject.Inject
@@ -152,6 +153,29 @@ class SingleResultFragment @Inject constructor() : BaseFragment() {
                 //binding.btnfavorite.setImageResource(R.drawable.favorite_icon_fill)
 
             }
+        }
+
+        binding.btnReport.setOnClickListener() {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Report")
+                .setMessage("You can report the content to us if you find it NSFW, offensive or for any other reason. So you can help us enhance our service.")
+                .setCancelable(false)
+                .setPositiveButton("Report") { dialog, which ->
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Report")
+                        .setMessage("Reported successfully.")
+                        .setCancelable(false)
+                        .setPositiveButton("Close") { dialog, which ->
+                            dialog.dismiss()
+                        }
+
+                        .show()
+                }
+                .setNegativeButton("Cancel"){ dialog, which ->
+                    dialog.dismiss()
+                }
+                .show()
+
         }
 
         binding.btnShare.setOnClickListener() {

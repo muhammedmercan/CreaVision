@@ -98,7 +98,7 @@ class AllResultsFragment : Fragment() {
 
             val currentValue = sharedPreferences.getInt("count", 0)
             val count = currentValue + 1
-            sharedPreferences.edit().putInt("count",count).commit()
+            sharedPreferences.edit().putInt("count",count).apply()
 
             if (count == 10 || count == 50 || (count % 100 == 0) ) {
                 showInAppView()

@@ -47,7 +47,7 @@ class HomeFragment: Fragment() {
 
     private val artStyleModalBottomSheet = ArtStyleBottomSheetModel(ArtStyleAdapter())
 
-    private var rewardedAd: RewardedAd? = null
+    //private var rewardedAd: RewardedAd? = null
     private final var TAG = "MainActivity"
 
     private var isLoading = false
@@ -134,6 +134,7 @@ class HomeFragment: Fragment() {
 
             if (it!!) {
                 binding.btnPremium.visibility = View.VISIBLE
+                Constants.rewardedAd = null
             }
         })
     }
@@ -176,12 +177,29 @@ class HomeFragment: Fragment() {
         binding.btnGenerate.setOnClickListener() {
             if (checkInternetConnection()) {
                 if (!DataHolder.isPremium.value!!) {
-                    if (rewardedAd != null) {
-                        showRewardedAd()
+                    if (Constants.rewardedAd != null) {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Generate Options")
+                            .setMessage("You can go premium or watch an ad to generate images")
+                            //.setCancelable(false)
+                            .setPositiveButton("Watch an Ad") { dialog, which ->
+                                //showRewardedAd()
+                                goCreate()
+                            }
+                            .setNegativeButton("Premium") { dialog, which ->
+                                findNavController().navigate(R.id.action_homeFragment_to_paywallUiFragment)
+                            }
+                            .setNeutralButton("Close") { dialog, which ->
+                                dialog.cancel()
+                            }
+                            .show()
+
                     } else {
-                        Snackbar.make(requireView(), "Error Load Ads", Snackbar.LENGTH_SHORT).show()
+                        goCreate()
+                        //Snackbar.make(requireView(), "Error Load Ads", Snackbar.LENGTH_SHORT).show()
                     }
                 } else {
+
                     goCreate()
                 }
             }
@@ -199,11 +217,11 @@ class HomeFragment: Fragment() {
             }
 
             binding.chip916.id -> {
-                width = 768; height = 1360
+                width = 720; height = 1280
             }
 
             binding.chip169.id -> {
-                width = 1360; height = 768
+                width = 1280; height = 720
             }
 
             binding.chip43.id -> {
@@ -243,7 +261,7 @@ class HomeFragment: Fragment() {
     }
 
     private fun loadRewardedAd() {
-        if (rewardedAd == null && !isLoading) {
+        if (Constants.rewardedAd == null && !isLoading) {
             isLoading = true
             val adRequest = AdRequest.Builder().build()
 
@@ -255,13 +273,13 @@ class HomeFragment: Fragment() {
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                         // Handle the error.
                         Log.d(TAG, loadAdError.toString())
-                        rewardedAd = null
+                        Constants.rewardedAd = null
                         isLoading = false
                     }
 
                     override fun onAdLoaded(ad: RewardedAd) {
                         Log.d(TAG, "Ad was loaded.")
-                        rewardedAd = ad
+                        Constants.rewardedAd = ad
                         isLoading = false
                     }
                 }
@@ -271,7 +289,7 @@ class HomeFragment: Fragment() {
 
     private fun showRewardedAd() {
 
-        rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+        Constants.rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdClicked() {
                 // Called when a click is recorded for an ad.
                 Log.d(TAG, "Ad was clicked.")
@@ -281,14 +299,14 @@ class HomeFragment: Fragment() {
                 // Called when ad is dismissed.
                 // Set the ad reference to null so you don't show the ad a second time.
                 Log.d(TAG, "Ad dismissed fullscreen content.")
-                rewardedAd = null
+                Constants.rewardedAd = null
                 loadRewardedAd()
             }
 
             override fun onAdFailedToShowFullScreenContent(adError: AdError) {
                 // Called when ad fails to show.
                 Log.e(TAG, "Ad failed to show fullscreen content.")
-                rewardedAd = null
+                Constants.rewardedAd = null
             }
 
             override fun onAdImpression() {
@@ -301,7 +319,7 @@ class HomeFragment: Fragment() {
                 Log.d(TAG, "Ad showed fullscreen content.")
             }
         }
-        rewardedAd?.show(requireActivity()) { rewardItem: RewardItem ->
+        Constants.rewardedAd?.show(requireActivity()) { rewardItem: RewardItem ->
             // Handle the reward.
             val rewardAmount = rewardItem.amount
             val rewardType = rewardItem.type
@@ -313,7 +331,6 @@ class HomeFragment: Fragment() {
     override fun onDestroyView() {
         binding.recyclerViewHome.setAdapter(null);
         _binding = null
-        rewardedAd = null
         isLoading = false
         super.onDestroyView()
         // View ile ilgili kaynakları serbest bırakmak için gerekli işlemler

@@ -18,8 +18,8 @@ android {
         applicationId = "com.ai.creavision"
         minSdk = 23
         targetSdk = 34
-        versionCode = 18
-        versionName = "2.8"
+        versionCode = 21
+        versionName = "3.1"
 
 
         var properties = Properties()

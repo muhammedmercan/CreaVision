@@ -13,15 +13,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/frameLayout3"
             app:layout_constraintEnd_toStartOf="@+id/frameLayout2"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/textView">
+            app:layout_constraintTop_toBottomOf="@+id/btnBack">
 
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imageView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:background="@drawable/edit_text_shape"
@@ -29,8 +30,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/imageView2"
                     app:layout_constraintStart_toStartOf="@+id/guideline4"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
-                    app:shapeAppearanceOverlay="@style/circular"
-                     />
+                    app:shapeAppearanceOverlay="@style/circular" />
 
 
         </FrameLayout>
@@ -48,7 +48,7 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:alpha="0.10"
@@ -72,8 +72,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:visibility="gone"
-                    android:text="@string/update_to_pro" />
+                    android:text="@string/update_to_pro"
+                    android:visibility="gone" />
 
 
         </FrameLayout>
@@ -82,16 +82,18 @@
             android:id="@+id/frameLayout3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/frameLayout4"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:layout_constraintVertical_bias="0.5">
 
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:alpha="0.10"
@@ -106,8 +108,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:src="@drawable/lock" />
+                    android:src="@drawable/lock"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtLock2"
@@ -115,8 +117,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:visibility="gone"
-                    android:text="@string/update_to_pro" />
+                    android:text="@string/update_to_pro"
+                    android:visibility="gone" />
 
 
         </FrameLayout>
@@ -126,14 +128,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/frameLayout3"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toEndOf="@+id/frameLayout3"
-            app:layout_constraintTop_toTopOf="@+id/frameLayout3">
+            app:layout_constraintTop_toTopOf="@+id/frameLayout3"
+            app:layout_constraintVertical_bias="0.5">
 
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:alpha="0.10"
@@ -148,8 +152,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:src="@drawable/lock" />
+                    android:src="@drawable/lock"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtLock3"
@@ -157,8 +161,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:visibility="gone"
-                    android:text="@string/update_to_pro" />
+                    android:text="@string/update_to_pro"
+                    android:visibility="gone" />
 
         </FrameLayout>
 

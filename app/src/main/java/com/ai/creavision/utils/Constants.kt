@@ -4,6 +4,7 @@ import com.ai.creavision.BuildConfig
 import com.ai.creavision.R
 import com.ai.creavision.domain.model.ArtStyle
 import com.ai.creavision.domain.model.ArtStylePrompt
+import com.google.android.gms.ads.rewarded.RewardedAd
 
 object Constants {
 
@@ -13,6 +14,8 @@ object Constants {
     const val REWARDED_AD_EXAMPLE = BuildConfig.REWARDED_AD_EXAMPLE
     const val REWARDED_AD = BuildConfig.REWARDED_AD
     const val ADAPTY_API_KEY = BuildConfig.ADAPTY_API_KEY
+    var rewardedAd: RewardedAd? = null
+
 
 
     var PROMPTS = mapOf(
